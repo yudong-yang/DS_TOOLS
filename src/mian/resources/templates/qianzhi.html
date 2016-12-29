@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>商品列表展示</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+$data.size()
+
+	#foreach($user in $data)
+	<div style="border:1px solid #ccc; padding:15px;width:80%;margin:0 auto;">
+    	<a href="javascript:void(0);" onclick="getValue('${user.url}')">
+    	<div style="list-style:none">      
+					<img src="${user.small_image}"/>				
+					<div style="display:inline-block; margin-left:20px;">
+                	<span style="font-size:24px;">${user.title}</span><br/> 
+                    <span style="font-size:16px;">${user.credits}</span>
+                    
+             </div>     
+        </div>
+        </a> 
+	</div>
+	#end	
+<script>
+	 function getValue(val){
+      window.location.href='/duiba/autologin?dbredirect='+encodeURIComponent(val); 
+      }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<title>设备指纹识别</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<style>
+body {
+	font-family: sans-serif;
+	max-width: 48em;
+	margin: auto;
+	padding: 0 5%;
+	background: #222;
+	color: #fff;
+}
+
+h1 {
+	margin: 2em 0 0;
+}
+
+p {
+	font-size: 1.2em
+}
+
+strong {
+	display: block;
+	letter-spacing: 1px;
+	word-wrap: break-word;
+}
+
+@media ( min-width : 32em) {
+	h1 {
+		font-size: 4em;
+	}
+	strong {
+		font-size: 1.5em;
+	}
+}
+</style>
+<script id="augur.js" async data-callback="callbackName" src="//yun.dui88.com/ds/js/augur.min.js" data-silent="1" data-warpspeed="2%Q+tq0"></script>
+</head>
+<body>
+	<h1>设备指纹识别</h1>
+	<br>
+	<p>
+		您的 DeviceID 是: 
+	</p>
+	<br>
+	<strong id="fp"></strong>
+	<br>
+	<p>
+		<code id="time" />
+	</p>
+	<script>
+		var d1 = new Date();
+		var deviceID;
+		function callbackName(json) {
+			var d2 = new Date();
+			var timeString = "生成设备指纹消耗时间: "
+					+ (d2 - d1) + "ms";
+			deviceID = json.device.ID;
+			$("#fp").text(deviceID);
+			$("#time").text(timeString);
+		}
+	</script>
+</body>
+</html>

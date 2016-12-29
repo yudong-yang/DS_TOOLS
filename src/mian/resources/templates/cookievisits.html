@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>记录客户信息</title>
+<script type="text/javascript">
+if(getCookie("num")){
+    var nn=parseInt(getCookie("num"));
+    setCookie("num",++nn);
+    }else{
+    setCookie("num",1);
+    }
+    function getCookie(name){
+    	
+    var str=document.cookie.split(";");
+    for(i=0;i<str.length;i++){ 
+    var str2=str[i].split("=")
+    if(str2[0].replace(/\s(.*)\s/,"$1")==name){
+    return str2[1];
+    }
+    }
+    }
+    function setCookie(name,value){
+    var Days=30;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape(value) +";expires"+ exp.toGMTString();
+    }
+    alert("您是第"+getCookie("num")+"次访问");
+    
+    /*String.prototype.Trim=function(){
+    return this.replace(/\s(.*)\s/,"$1");
+    }
+    String.prototype.alert2=function(str){
+    alert("我是alert2！！！哈哈哈哈 实际内容是:"+str);
+    }
+    var aa="";
+    aa.alert("liugang");*/
+    
+
+</script>
+</head>
+
+<body>
+<div align="center">
+<a href="/getvisits">点我点我</a>
+</div>
+</body>
+</html>

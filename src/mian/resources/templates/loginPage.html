@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>设备指纹测试</title>
+</head>
+<body>
+
+<input type="text" id="key" name="uid"/>
+<input type="button" value="确定" onclick="javascript:button_onclick();"/>
+	
+<script>
+     function button_onclick(){
+      var result = document.getElementById("key").value;
+      alert(result)
+      window.location.replace('/duiba/autologin2?dbredirect=http%3A%2F%2Fwww.duiba.com.cn%2Fmobile%2Fdetail%3FitemId%3D191&;uid='+ result);  
+}
+</script>
+</body>
+</html>
