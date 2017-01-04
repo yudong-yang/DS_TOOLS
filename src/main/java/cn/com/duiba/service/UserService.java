@@ -67,19 +67,17 @@ public class UserService {
 	 * @throws Exception 
 	 */
 	public void AddCredit(String Uid,Long credits) throws Exception {
-		int i=jdbcTemplate
+		try {int i=jdbcTemplate
 				.update("update users set credits=credits+? where userid =?",
 						new Object[] {  credits, Uid }, new int[] {
 						java.sql.Types.INTEGER, 
 						java.sql.Types.VARCHAR});
 		System.out.println("数据库变更==："+i);
-		try {
-			
-		} catch (Exception e) {
 			if(i==0){
-			throw new Exception("订单创建失败，订单号重复");
+				throw new Exception("积分增加失败");	
 			}
-			
+		} catch (Exception e) {
+			throw new Exception("订单创建失败，订单号重复");	
 		}
 	}
 	
@@ -105,4 +103,15 @@ public class UserService {
 	                });
 	        return user.getCredits();
 	    }
+	  
+	  
+	  public String deleteByid(String Uid) {
+			int flag = jdbcTemplate.update("delete from users where userid =?",
+							new Object[] { Uid }, new int[] {
+									java.sql.Types.VARCHAR});
+			if(flag==0){
+			return "删除失败";}
+			else{return "删除成功";}
+		}
+	  
 }

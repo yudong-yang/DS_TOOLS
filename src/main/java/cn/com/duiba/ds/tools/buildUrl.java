@@ -27,6 +27,7 @@ public class buildUrl {
 		CreditTool tool = new CreditTool("3gyWdRiPKkaMiiH6V3RUFybsdeDZ", "4DEz67Z1VmzWVxUy5mVUnZoS2d8v");
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("count", count);
+			params.put("is_https", "True");
 //			params.put("timestamp","1598596085000");
 			String url = tool.buildUrlWithSign("https://www.duiba.com.cn/queryForFrontItem/query?", params);	
 			return url;

@@ -70,7 +70,7 @@ public class DuibaApi {
 		        errorMessage = "服务器异常，appKey不匹配";
 		    } else if (orderNum == null) {
 		        errorMessage = "服务器异常，订单号为空";}
-		        else if (Uid.equals("1111")) {
+		        else if (Uid.equals("4444")) {
 			        errorMessage = "该用户不支持兑换";
 			        System.out.println(errorMessage);
 		    } else {
@@ -129,8 +129,13 @@ public class DuibaApi {
 		    ccr.setCredits(userService.GetCreditsByUid(Uid));
 			return ccr.toString();
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			  CreditConsumeResult ccr = new CreditConsumeResult(false);
+			  ccr.setErrorMessage("加积分异常"+e.getMessage());
+			  ccr.setCredits(-1L);
+			  ccr.setBizId("bizid=123345323423");
+				return ccr.toString();
+//			  return"测试环境响应失败内容测试的";
+			 
 		}
 	}
 	
@@ -211,7 +216,12 @@ public class DuibaApi {
 	public RedirectView autologin(HttpServletRequest request,@CookieValue("cook") String cookvalue)  { {
 		System.out.println("获取的cookie值==="+cookvalue);
 		CreditTool tool=new CreditTool(appKey, appSecret);
-		String uid = "3333";
+		String uid=null;
+		if(cookvalue!=null){
+		 uid = cookvalue;
+		}else{
+			uid="not_login";
+		}
 		String dbredirect = request.getParameter("dbredirect");
 		Map<String, String> params=new HashMap<String, String>();
 		if(uid!=null&&uid!=""&&uid!= "null"){

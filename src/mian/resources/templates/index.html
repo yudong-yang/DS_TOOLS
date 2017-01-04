@@ -1,21 +1,81 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
-  <meta charset="UTF-8"/>
+<html>
+<head>
+<meta charset="utf-8">
+<title>测试ajax显示appsecret</title>
+<script
+	src="https://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js">
+	
+</script>
+<script>
+
+
+
+$(document).ready(function(){
+	$("button").click(function(){
+		$.ajax({
+		    cache: true,
+		    type: "post",
+		    url:"/geturl",
+		    data:$('#myform').serialize(),// 你的formid
+		    async: false,
+		    error: function(request) {
+		        alert("Connection error");
+		    },
+		    success: function(result) {
+	
+		        	$("#appSecret").html(result.replace("&timestamp", "&amp;timestamp"));
+		    }
+		});
+	});
+	
+	$("a").click(function(){
+		var url = $("a").html().replace(/\amp;/g, "")
+		var con=confirm(url)
+		if(con==true){window.location.href=url;}
+		else{}
+		
+	});
+	
+});
+
+</script>
 </head>
 <body>
+<form id="myform">
+<table>
+<tr>
+<td>
+<input type="text" id="name" name="name" />
+</td>
+</tr>
+<tr>
+<td>
+<input type="text" id="credits" name="credits" />
+</td>
+</tr>
+<tr>
+<td>
+<input type="text" id="dcustom" name="dcustom" />
+</td>
+</tr>
+<tr>
+<td>
+<input id="rdo1" name="rdo1" type="radio" value="normal" checked="checked"/>正式环境
+ 	 <input id="rdo1" name="rdo1" type="radio" value="test"/>测试环境
+   	<input id="rdo1" name="rdo1" type="radio" value="pre"/>预发环境
+</td>
+</tr>
+</table>
 
-
-<a href="javascript:void(0);" onclick="getValue('asdjhsadfh')">点我点我</a>
-
-<script>
-    function getValue(val){
-        alert(val);
-        location.href='www.baidu.com'
-    }
-</script>
-
+	
+	
+ 	
+</form>
+<button>测试</button>
+	<a id="appSecret" href="#"></a>
+</body>
+</html>
 
 </body>
 
