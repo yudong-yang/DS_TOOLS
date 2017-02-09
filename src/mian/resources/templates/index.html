@@ -12,7 +12,7 @@
 
 
 $(document).ready(function(){
-	$("button").click(function(){
+	$("#autologin").click(function(){
 		$.ajax({
 		    cache: true,
 		    type: "post",
@@ -23,19 +23,35 @@ $(document).ready(function(){
 		        alert("Connection error");
 		    },
 		    success: function(result) {
-	
-		        	$("#appSecret").html(result.replace("&timestamp", "&amp;timestamp"));
+		        	$("#url").html(result.replace("&timestamp", "&amp;timestamp"));
 		    }
 		});
 	});
 	
 	$("a").click(function(){
 		var url = $("a").html().replace(/\amp;/g, "")
-		var con=confirm(url)
-		if(con==true){window.location.href=url;}
-		else{}
-		
+		window.open(url);
 	});
+	
+	
+	$("#secret").click(function(){
+		var data= {secretcode:$("#secretcode").val()};
+		$.ajax({
+		    cache: true,
+		    type: "post",
+		    url:"/getAppSecret",
+		    data:data,// 你的formid
+		    async: false,
+		    error: function(request) {
+		        alert("Connection error");
+		    },
+		    success: function(result) {
+		    	$("#appsecret").html(result);	
+					
+		    }
+		});
+	});
+	
 	
 });
 
@@ -45,16 +61,19 @@ $(document).ready(function(){
 <form id="myform">
 <table>
 <tr>
+<td>用户名：</td>
 <td>
-<input type="text" id="name" name="name" />
+<input type="text" id="uid" name="uid" />
 </td>
 </tr>
 <tr>
+<td>用积分：</td>
 <td>
 <input type="text" id="credits" name="credits" />
 </td>
 </tr>
 <tr>
+<td>自定义参数：</td>
 <td>
 <input type="text" id="dcustom" name="dcustom" />
 </td>
@@ -67,13 +86,16 @@ $(document).ready(function(){
 </td>
 </tr>
 </table>
-
-	
-	
- 	
 </form>
-<button>测试</button>
-	<a id="appSecret" href="#"></a>
+
+
+<button id="autologin">测试</button>
+	<a id="url" href="#"></a>
+</br>	
+<p>输入secretcode: <input type="text" id="secretcode" name="secretcode" size="50"/></p>
+<button id="secret">获得appsecret</button>
+
+<p id="appsecret"></p>
 </body>
 </html>
 

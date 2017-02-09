@@ -14,7 +14,7 @@ import cn.com.duiba.entity.User;
 
 @Service
 public class UserService {
-
+	public static int pagesize = 20;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -35,6 +35,26 @@ public class UserService {
 
 		});
 	}
+	
+	
+	public List<User> findByPage(int pageNum) {
+		String sql = "SELECT userid,username,credits,phone, vip FROM users limit ?,?";
+		 		int start = (pageNum-1)*pagesize;
+		return (List<User>) jdbcTemplate.query(sql, new Object[]{start,pagesize},new RowMapper<User>() {
+
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				User user = new User();
+				user.setUserid(rs.getString("userid"));
+				user.setUsername(rs.getString("username"));
+				user.setCredits(rs.getLong("credits"));
+				user.setPhone(rs.getString("phone"));
+				user.setVip(rs.getString("vip"));
+				return user;
+			}
+
+		});
+	}
+	
 /**
  * 插入数据库
  * @param user
@@ -81,12 +101,15 @@ public class UserService {
 		}
 	}
 	
-	public void returnCredit(String Uid,Long credits) {
-		jdbcTemplate
+	public String returnCredit(String Uid,Long credits) {
+		int i = jdbcTemplate
 				.update("update users set credits=credits+? where userid =?",
 						new Object[] {  credits, Uid }, new int[] {
 								java.sql.Types.INTEGER, 
 								java.sql.Types.VARCHAR});
+		if(i==0){
+			return "积分返还失败";
+		}else{return "积分返还成功";}
 	}
 	/**
 	 * 根据id查积分

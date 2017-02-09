@@ -43,7 +43,7 @@ public class UserController {
         user.setPhone("");
 		userService.insert(user);
         }
-		return "redirect:/user/list";	
+		return "redirect:/user/list/1";	
     }   
     
     @RequestMapping("/getcredits")
@@ -55,11 +55,21 @@ public class UserController {
     
 	@RequestMapping("/list")
 	public String list(Model model) {
-		List<User> list = userService.getList();
-		model.addAttribute("users", list);
-		return "list";
+		return "redirect:/user/list/1";
 	}
     
+	@RequestMapping("/list/{number}")
+	public String listBypage(Model model,@PathVariable("number") int number) {
+		if(number==0){number=1;}
+		List<User> list = userService.findByPage(number);
+		int count = userService.getList().size()/20;
+		model.addAttribute("users", list);
+		logger.info("指定页面的长度"+list.size());
+		model.addAttribute("pagenum", number);
+		model.addAttribute("count", count);
+		return "list";
+	}
+	
     @RequestMapping("/delete")
     @ResponseBody
     public String DeleteByid(HttpServletRequest request){

@@ -19,7 +19,7 @@ public class HttpGetDemo {
 		 String name="./src/main/java/cn/com/duiba/test/consumer.txt";
 			String URL = buildUrl.fileread(name).toString();
 		
-		String appSecret = "3buJGtYGyeoKSuo73FJpT22Znejv";
+		String appSecret = "3gyWdRiPKkaMiiH6V3RUFybsdeDZ";
 
 			Map<String, String> p =buildUrl.UrltoMap(URL, appSecret);
 			System.out.println(p);

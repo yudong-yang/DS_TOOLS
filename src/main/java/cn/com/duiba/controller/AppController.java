@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AppController {
 	
 	@RequestMapping("/")
-	@ResponseBody
+	
 	public String index(HttpServletRequest request) {
-		return "Welcome to duiba credits weixin service";
+		return "index";
 	}
 	
 	@RequestMapping("/err")

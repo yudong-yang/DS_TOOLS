@@ -190,7 +190,7 @@ public class CreditTool {
 	 * @throws Exception
 	 */
 	public CreditConsumeParams parseCreditConsume(HttpServletRequest request) throws Exception{
-		
+		System.out.println("appkey==="+request.getParameter("appKey"));
 		if(!appKey.equals(request.getParameter("appKey"))){
 			throw new Exception("appKey不匹配");
 		}

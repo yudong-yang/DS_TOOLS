@@ -24,12 +24,13 @@ public class buildUrl {
 	 * @return
 	 */
 	public static String getQianzhiUrl(String count) {
+//		CreditTool tool = new CreditTool("2EANZHTgJCXk1GDH5XyGve2eLbmU", "6pvMLfyL58H95N2JbGmz7Fxh2Dt");//阿凡提前置接口查询
 		CreditTool tool = new CreditTool("3gyWdRiPKkaMiiH6V3RUFybsdeDZ", "4DEz67Z1VmzWVxUy5mVUnZoS2d8v");
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("count", count);
-			params.put("is_https", "True");
+//			params.put("is_https", "True");
 //			params.put("timestamp","1598596085000");
-			String url = tool.buildUrlWithSign("https://www.duiba.com.cn/queryForFrontItem/query?", params);	
+			String url = tool.buildUrlWithSign("http://www.duiba.com.cn/queryForFrontItem/query?", params);	
 			return url;
 		}
 	

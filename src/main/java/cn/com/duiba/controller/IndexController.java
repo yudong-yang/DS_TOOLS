@@ -3,6 +3,7 @@ package cn.com.duiba.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.com.duiba.Utils.PropertiesLoader;
 import cn.com.duiba.ds.encrypt.BlowfishUtils;
 import cn.com.duiba.ds.tools.sdk.CreditTool;
 import cn.com.duiba.entity.User;
@@ -41,6 +43,21 @@ public class IndexController {
 
 		return "index";
 	}
+
+	@RequestMapping("/appAddtest")
+	public String appAddtest(HttpServletRequest request ,Model model) {
+		String appKey = request.getParameter("appKey");
+		String appSectet = request.getParameter("appSectet");
+		Map<String, String> map = new LinkedHashMap<String, String>();  
+        map.put("aaa.appKey",appKey);  
+        map.put("aaa.appSectet",appSectet);  
+        System.out.println(map);
+		PropertiesLoader.updateProperties("KeySecretMap.properties", map);
+		model.addAttribute("url1","http://yang.s1.natapp.cc/duiba/consume/aaa");
+		model.addAttribute("url2","http://yang.s1.natapp.cc/duiba/notify/aaa");
+		return "url";
+	}
+
 	@RequestMapping("/autologin")
 	public String autologin() {
 		return "autologin";
@@ -64,7 +81,7 @@ public class IndexController {
 	@ResponseBody
 	public String geturl(HttpServletRequest request)
 			throws UnsupportedEncodingException {
-		{
+		
 			CreditTool tool = new CreditTool("jlg88lyxz7siqtmr",
 					"1x0eap95f4xfi77uaptrnwh9ewzvlm"); // 115
 			Map<String, String> params = new HashMap<String, String>();
@@ -109,7 +126,7 @@ public class IndexController {
 			System.out.println(url);
 			return url;
 		}
-	}
+	
 
 	@RequestMapping("/cookievisits")
 	public String cookievisits() {

@@ -13,7 +13,14 @@ public class Credits {
 	private String ip;
 	private String waitAudit;
 	private String params;
+	private String status;
 	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -87,5 +94,4 @@ public class Credits {
 		this.params = params;
 	}
 	
-
 }

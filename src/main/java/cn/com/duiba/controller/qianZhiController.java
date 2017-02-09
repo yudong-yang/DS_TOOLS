@@ -23,6 +23,7 @@ public class qianZhiController  {
     public String qianzhi(Model model, HttpServletResponse response) {
 		response.addCookie(new Cookie("cook", "3333"));
 		String url= buildUrl.getQianzhiUrl("50");
+		System.out.println("前置商品URL=="+url);
 		String body = buildUrl.sendGet(url);
 		JSONObject oAuthResJson  = JSON.parseObject(body);
 		JSONArray data = JSON.parseArray(oAuthResJson.getString("data"));

@@ -18,6 +18,7 @@ public class SignTool {
 		Map<String, String> data=new HashMap<String, String>();
 		for(String key:map.keySet()){
 			data.put(key, map.get(key)[0]);
+			
 		}
 		return signVerify(appSecret, data);
 	}
@@ -25,7 +26,7 @@ public class SignTool {
 	public static boolean signVerify(String appSecret,Map<String, String> params){
 		Map<String, String> map=new HashMap<String, String>();
 		map.put("appSecret", appSecret);
-		
+		map.remove("formid");
 		for(String key:params.keySet()){
 			if(!key.equals("sign")){
 				map.put(key, params.get(key));

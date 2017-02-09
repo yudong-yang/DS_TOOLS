@@ -12,12 +12,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cn.com.duiba.Utils.PropertiesLoader;
 import cn.com.duiba.ds.tools.sdk.AddCreditsParams;
 import cn.com.duiba.ds.tools.sdk.CreditConsumeParams;
 import cn.com.duiba.ds.tools.sdk.CreditConsumeResult;
@@ -46,14 +49,27 @@ public class DuibaApi {
     private VirtualService virtualService;
 	
     
-	@Value("${duiba.appKey}")
+/*	@Value("${duiba.appKey}")
 	private String appKey;
 	@Value("${duiba.appSecret}")
 	private String appSecret;
-	@RequestMapping("/consume")
+	*/
+	
+	public String GetAppkeyByid(String appid){
+		return PropertiesLoader.GetPropertiesValue(appid+".appKey");
+	}
+	public String GetSecretByid(String appid){
+		return PropertiesLoader.GetPropertiesValue(appid+".appSecret");	
+	}
+	
+	
+	@RequestMapping("/consume/{appid}")
 	@ResponseBody
-	public String consume(HttpServletRequest request) {
+	public String consume(HttpServletRequest request, @PathVariable("appid") String appid) {
+		String appKey=GetAppkeyByid(appid);
+		String appSecret=GetSecretByid(appid);
 		CreditTool tool=new CreditTool(appKey, appSecret);
+
 		try {
 			CreditConsumeParams params= tool.parseCreditConsume(request);
 			System.out.println(params.getParams()+"==="+params.getDescription());
@@ -70,7 +86,7 @@ public class DuibaApi {
 		        errorMessage = "服务器异常，appKey不匹配";
 		    } else if (orderNum == null) {
 		        errorMessage = "服务器异常，订单号为空";}
-		        else if (Uid.equals("4444")) {
+		        else if (Uid.equals("5555")) {
 			        errorMessage = "该用户不支持兑换";
 			        System.out.println(errorMessage);
 		    } else {
@@ -85,6 +101,7 @@ public class DuibaApi {
 		    ccr.setErrorMessage(errorMessage);
 		    ccr.setBizId(bizId);
 		    ccr.setCredits(userService.GetCreditsByUid(Uid));
+//		    Thread.sleep(20000);
 			return ccr.toString();
 //			 return"测试环境响应失败内容测试的";
 		} catch (Exception e) {
@@ -99,11 +116,14 @@ public class DuibaApi {
 	}
 	
 	//加积分接口
-	@RequestMapping("/addCredits")
+	@RequestMapping("/addCredits/{appid}")
 	@ResponseBody
-	public String addCredits(HttpServletRequest request) {
+	public String addCredits(HttpServletRequest request, @PathVariable("appid") String appid) {
+		
+		String appKey=GetAppkeyByid(appid);
+		String appSecret=GetSecretByid(appid);
 		CreditTool tool=new CreditTool(appKey, appSecret);
-		try {
+		try {		
 			AddCreditsParams params= tool.parseaddCredits(request);
 			String paramsAppKey = request.getParameter("appKey"); //获取code
 			String orderNum = request.getParameter("orderNum"); //获取兑吧订单号
@@ -111,7 +131,7 @@ public class DuibaApi {
 //			String bizId = orderNum;
 			Long credits =params.getCredits();
 			String Uid =request.getParameter("uid");
-			String errorMessage = "";
+			String errorMessage = ""; 
 			boolean success = false;
 
 		    if (!appKey.equals(paramsAppKey)) {
@@ -140,35 +160,47 @@ public class DuibaApi {
 	}
 	
 	
-	@RequestMapping("/notify")
+	@RequestMapping("/notify/{appid}")
 	@ResponseBody
-	public String notify(HttpServletRequest request) {
+	@Transactional
+	public String notify(HttpServletRequest request, @PathVariable("appid") String appid) {
+		String appKey=GetAppkeyByid(appid);
+		String appSecret=GetSecretByid(appid);
 		CreditTool tool=new CreditTool(appKey, appSecret);
 		 try {
 			CreditNotifyParams params= tool.parseCreditNotify(request);
 			    String orderNum=params.getOrderNum();
 			    if(params.isSuccess()){
-			    	System.out.println("响应信息null");
+			    	creditsService.updateOrderStatus(orderNum,"success");
 			    	return "ok";
-			    	
 			    }else{
-			    	
-			    }
-			    	String uid = creditsService.findCreditByUid(orderNum).getUserId();
-			    	Long credits=creditsService.findCreditByUid(orderNum).getCredits();
-			    	userService.returnCredit(uid , credits);
-			    	
+			    	Credits Credit =  creditsService.findCreditByUid(orderNum);
+			    	String orderstatus = Credit.getStatus();
+			    	logger.info("返回订单状态====："+orderstatus);
+			    	if(orderstatus=="success"){
+			    		logger.info("用户积分返还情况====：订单是成功状态，不需要返还积分");	
+			    	}else if(orderstatus==null){
+			    	String msg = userService.returnCredit(Credit.getUserId() , Credit.getCredits());
+			    	logger.info("用户积分返还情况====："+msg);
+			    	if(msg.equals("积分返还成功")){
+			    	creditsService.updateOrderStatus(orderNum,"fail");
+			    	}else{logger.info("用户积分返还情况====："+msg);}
+			    	}else{logger.info("用户积分返还情况====：积分已经返还，请勿重复返还");}
 			    	return "ok";
+			    }
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return "ok";
 		}
 		
 	}
 	
-	@RequestMapping("/virtual")
+	@RequestMapping("/virtual/{appid}")
 	@ResponseBody
-	public String virtual(HttpServletRequest request) {
+	public String virtual(HttpServletRequest request, @PathVariable("appid") String appid) {
+		String appKey=GetAppkeyByid(appid);
+		String appSecret=GetSecretByid(appid);
+		
 		CreditTool tool=new CreditTool(appKey, appSecret);
 		 try {
 			VirtualConsumeParams params= tool.virtualCreditConsume(request);
@@ -212,9 +244,11 @@ public class DuibaApi {
 	}
 	
 	
-	@RequestMapping("/autologin")
-	public RedirectView autologin(HttpServletRequest request,@CookieValue("cook") String cookvalue)  { {
+	@RequestMapping("/autologin/{appid}")
+	public RedirectView autologin(HttpServletRequest request,@CookieValue("cook") String cookvalue, @PathVariable("appid") String appid)  { {
 		System.out.println("获取的cookie值==="+cookvalue);
+		String appKey=GetAppkeyByid(appid);
+		String appSecret=GetSecretByid(appid);
 		CreditTool tool=new CreditTool(appKey, appSecret);
 		String uid=null;
 		if(cookvalue!=null){
@@ -249,36 +283,39 @@ public class DuibaApi {
 	
 	
 	
-	@RequestMapping("/autologin2")
-	public RedirectView autologin2(HttpServletRequest request)  { {
+	@RequestMapping("/autologin2/{appid}")
+	public RedirectView autologin2(HttpServletRequest request, @PathVariable("appid") String appid)  { 
+		String appKey=GetAppkeyByid(appid);
+		String appSecret=GetSecretByid(appid);
 		CreditTool tool=new CreditTool(appKey, appSecret);
+			
 		String uid = request.getParameter("uid");
 		String dbredirect = request.getParameter("dbredirect");
 //		String dbredirect = "http://www.duiba.com.cn/mobile/detail?itemId=1888&dbnewopen";
 		Map<String, String> params=new HashMap<String, String>();
-		if(uid!=null&&uid!=""&&uid!= "null"){
+		if(uid!=null&&uid!=""&&uid!= "null"&&uid!="not_login"){
 			params.put("uid",uid);
 			logger.info("用户id=="+uid);
 			Long credit = userService.GetCreditsByUid(uid);
 			logger.info("用户积分"+credit);
 			if(credit!=null){
 			params.put("credits",credit.toString());
-			}
+			}else{params.put("credits","0");}
 		}else{
 			params.put("uid","not_login");
 			logger.info("用户id"+uid);
 			params.put("credits","0");
 		}
-		
 	if(dbredirect!=null&&dbredirect!=""&&dbredirect != "null"){
-			params.put("redirect",dbredirect);
+		params.put("redirect","http://home.m.duiba.com.cn/#/chome/index");
+//			params.put("redirect",dbredirect);
 			logger.info("用户redirect="+dbredirect);
 		}
 	String url=tool.buildUrlWithSign("http://www.duiba.com.cn/autoLogin/autologin?",params);
 	System.out.println("免登陆地址=："+url);
 	return new RedirectView(url, true, false, true);
 	}
-	}
+	
 	
 	
 	@RequestMapping("/testlogin")
