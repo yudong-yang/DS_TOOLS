@@ -22,6 +22,12 @@ repositories {
 }
 
 dependencies {
+
+
+	compile("commons-io:commons-io:2.3")
+	compile("commons-httpclient:commons-httpclient:3.1")
+//   compile("org.springframework.boot:spring-boot-devtools:true")
+    compile("org.mybatis:mybatis:3.4.2")
     compile("mysql:mysql-connector-java")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("com.h2database:h2")
@@ -31,6 +37,10 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-test")
 	compile("com.alibaba:fastjson:1.1.15")
 	compile("org.apache.httpcomponents:httpclient:4.3.3")
+	
+	compile("org.apache.httpcomponents:httpmime:4.4.1")
+	
+
     compile('commons-lang:commons-lang:2.6')	//commons基础包，要是针对Java.lang包进行一些封装，提供一些工具类
     compile('commons-codec:commons-codec:1.4')	//commons基础包，要是针对Java.lang包进行一些封装，提供一些工具类
     compile fileTree(dir: 'lib', include: '*.jar')

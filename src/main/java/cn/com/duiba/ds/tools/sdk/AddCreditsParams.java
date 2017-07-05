@@ -15,6 +15,7 @@ public class AddCreditsParams {
 	private String type="";//类型：QB,Phonebill,Alipay,Coupon  所有类型不区分大小写
 	private String uid="";
 	private String ip="";//用户兑换时使用的ip地址，有可能为空
+	private String transfer="";
 	public Long getCredits() {
 		return credits;
 	}
@@ -66,4 +67,10 @@ public class AddCreditsParams {
 		this.ip = ip;
 	}
 
+	public String getTransfer() {
+		return transfer;
+	}
+	public void setTransfer(String transfer) {
+		this.transfer = transfer;
+	}
 }

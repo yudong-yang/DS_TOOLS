@@ -15,8 +15,15 @@ public class CreditConsumeResult {
 	public String toString(){
 		if(success){
 			return "{'status':'ok','errorMessage':'','bizId':'"+bizId+"','credits':'"+credits+"'}";
+			
+			
+//			return "{'status':'ok','errorMessage':'','data':{'bizid':'"+bizId+"'}}";
 		}else{
 			return "{'status':'fail','errorMessage':'"+errorMessage+"','credits':'"+credits+"'}";
+//			return "{'code':'积分失败','status':'fail','errorMessage':'"+errorMessage+"','credits':'"+credits+"'}";
+//			return "{\"code\":\"积分失败\",\"status\":\"fail\",\"errorMessage\":\"对不起,您的账号已被拉入黑名单,暂不能兑换!\",\"credits\":\"11166\"}";
+			
+			
 		}
 	}
 

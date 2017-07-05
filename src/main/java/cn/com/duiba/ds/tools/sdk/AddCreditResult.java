@@ -14,7 +14,7 @@ public class AddCreditResult {
 	
 	public String toString(){
 		if(success){
-			return "{'status':'success','errorMessage':'','bizId':'"+bizId+"','credits':'"+credits+"'}";
+			return "{'status':'ok','errorMessage':'','bizId':'"+bizId+"','credits':'"+credits+"'}";
 		}else{
 			return "{'status':'fail','errorMessage':'"+errorMessage+"','credits':'"+credits+"'}";
 		}

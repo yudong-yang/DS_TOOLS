@@ -8,12 +8,12 @@ package cn.com.duiba.sendmsg;
 
 import java.io.IOException;
 import java.util.Map;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.SimpleHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+
 
 /**  
  * @Author: feizi
@@ -135,6 +135,7 @@ public class HttpRequestUtil {
 				client = null;
 			}
 		}
+		System.out.println("响应结果=="+result);
 		return result;
 	}
 }

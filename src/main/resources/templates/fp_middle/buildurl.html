@@ -1,0 +1,87 @@
+<html>
+<head>
+<meta charset="GBK">
+<title>活动工具拼接工具</title>
+<script
+	src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js">
+	
+</script>
+<script>
+	$(document).ready(
+			function() {
+				$("#redirectbtn").click(
+						function() {
+							var url1 = document.getElementById("url1").value;
+							var url2 = document.getElementById("url2").value;
+							if (url1.length == 0 || url2.length == 0) {
+								alert("输入不能为空")
+							} else {
+								var redirect = url1 + "?dbredirect="
+										+ encodeURIComponent(url2);
+								alert(redirect)
+								$("#redirecrurl").html(redirect)
+							}
+						});
+
+				$("#urlbtn").click(function() {
+					var url3 = document.getElementById("url3").value;
+					if (url3.length == 0) {
+						alert("输入不能为空")
+					} else {
+						var redirect = url3.split("dbredirect=");
+						if (redirect.length == 1) {
+							alert("输入有误")
+						} else {
+							var d = redirect[1];
+							alert(decodeURIComponent(d))
+							$("#duibaurl").html(decodeURIComponent(d))
+						}
+					}
+				});
+
+			});
+</script>
+
+</head>
+<body>
+	<h1 align="center">活动工具拼接工具</h1>
+	<p align="center">友情提示：运营直达接口连接，是要取后台的运营直达工具链接，主会场链接，填写运营给的主会场链接</p>
+	<div align="center">
+		<table>
+			<tr>
+				<td>运营位置直达接口：</td>
+				<td><input type="text" id="url1" name="url1" size="50" /></td>
+			</tr>
+			<tr>
+				<td>主会场链接</td>
+				<td><input type="text" id="url2" name="url2" size="50" /></td>
+			</tr>
+		</table>
+		</br>
+		</br>
+		<button id="redirectbtn">提交</button>
+		</br>
+		</br>
+		</br>
+		<p>生成运营位置直达的链接：</p>
+		<p id="redirecrurl"></p>
+		</br>
+		</br>
+		</br>
+		<h2>======================================我是分割线========================================</h2>
+		运营位置直达拼接链接： <input type="text" id="url3" name="url3" size="50" /> </br>
+		</br>
+		<button id="urlbtn">提交</button>
+
+		<p>获取解码后活动原始链接：</p>
+		<p id="duibaurl"></p>
+	</div>
+
+
+</body>
+</html>
+
+</body>
+
+
+</html>

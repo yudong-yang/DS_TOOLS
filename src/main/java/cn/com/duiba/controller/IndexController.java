@@ -1,7 +1,12 @@
 package cn.com.duiba.controller;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,12 +19,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.com.duiba.Utils.GetAppkey;
 import cn.com.duiba.Utils.PropertiesLoader;
 import cn.com.duiba.ds.encrypt.BlowfishUtils;
+import cn.com.duiba.ds.tools.buildUrl;
 import cn.com.duiba.ds.tools.sdk.CreditTool;
-import cn.com.duiba.entity.User;
+import cn.com.duiba.ds.tools.sdk.SignTool;
 import cn.com.duiba.service.UserService;
 import cn.com.duiba.service.VirtualService;
 
@@ -33,6 +41,11 @@ public class IndexController {
 	@Autowired
 	private VirtualService virtualService;
 
+	
+	 @Autowired  
+	 private GetAppkey getAppkey; 
+	
+	
 	@RequestMapping("/test")
 	public String fpTest() {
 		return "fp_middle/fptest";
@@ -40,10 +53,49 @@ public class IndexController {
 
 	@RequestMapping("/index")
 	public String index() {
-
 		return "index";
 	}
 
+	@RequestMapping("/sign")
+	public String signTool() {
+		return "duiba/signTool";
+	}
+	
+	 @RequestMapping("/testapp")  
+	    public @ResponseBody String test(){  
+	        System.out.println(getAppkey.getAppKey()+"---"+getAppkey.getAppSecret());  
+	        return "ok";  
+	    }   
+	
+	 
+	 @RequestMapping(value="/testPost", method = RequestMethod.POST)  
+	    public @ResponseBody String testPost(HttpServletRequest request){  
+		 String name = request.getParameter("name");
+		 String sex = request.getParameter("sex");
+	        return "{'name':"+name+",'sex':"+sex+"}";  
+	    }   
+
+	
+	@RequestMapping("/signtools")
+	@ResponseBody
+		public String signtools(HttpServletRequest request) throws FileNotFoundException, UnsupportedEncodingException, IOException{
+		 String URL = request.getParameter("url");
+		 String appSecret = request.getParameter("appSecret"); 
+		 Map<String, String> p =buildUrl.UrltoMap(URL, appSecret);
+			String str= SignTool.signstring(p);
+			String sign1=(String) p.get("sign");
+			p.remove("sign");
+			String sign = SignTool.sign(p);
+			String msg=null;
+			if(sign.endsWith(sign1)){
+				msg="恭喜你，签名通过！";
+			}else{
+				msg="很遗憾，签名不通过！";
+			}
+	        return str+"$$"+p+"$$"+sign+"$$"+msg;  
+		}
+	
+	
 	@RequestMapping("/appAddtest")
 	public String appAddtest(HttpServletRequest request ,Model model) {
 		String appKey = request.getParameter("appKey");
@@ -88,8 +140,9 @@ public class IndexController {
 			String uid = request.getParameter("uid");
 			String credit = request.getParameter("credits");
 			String dcustom = request.getParameter("dcustom");
+			String redirect = request.getParameter("redirect");
 			String demo = request.getParameter("rdo1");
-
+			System.out.println("redirect==:"+redirect);
 			String url1 = "";
 
 			if (demo.equals("test")) {
@@ -113,7 +166,6 @@ public class IndexController {
 			} else {
 				params.put("credits", "0");
 			}
-			String redirect = "";
 			if (dcustom != null && dcustom != "") {
 				params.put("dcustom", URLEncoder.encode(dcustom, "UTF-8"));
 				// params.put("dcustom",dcustom);
@@ -123,6 +175,43 @@ public class IndexController {
 			}
 
 			String url = tool.buildUrlWithSign(url1, params);
+			System.out.println(url);
+			return url;
+		}
+	
+	
+	
+	
+	
+	@RequestMapping("/autourl")
+	@ResponseBody
+	public String autourl(HttpServletRequest request)
+			throws UnsupportedEncodingException {
+		String appKey = request.getParameter("appKey");
+		String appSecret = request.getParameter("appSecret");
+			CreditTool tool = new CreditTool(appKey,appSecret); // 115
+			Map<String, String> params = new HashMap<String, String>();
+			String uid = request.getParameter("uid");
+			String credits = request.getParameter("credits");
+			String transfer = request.getParameter("transfer");
+			if (uid != null && uid != "") {
+
+				params.put("uid", uid);
+			} else {
+				params.put("uid", "not_login");
+			}
+
+			if (credits != null && credits != "") {
+				params.put("credits", credits);
+			} else {
+				params.put("credits", "0");
+			}
+			if (transfer != null && transfer != "") {
+				params.put("transfer", transfer);
+			}
+			long times = System.currentTimeMillis()+2400000;
+			params.put("timestamp", times+"");
+			String url = tool.buildUrlWithSign("http://www.duiba.com.cn/autoLogin/autologin?", params);
 			System.out.println(url);
 			return url;
 		}

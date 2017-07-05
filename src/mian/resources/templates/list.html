@@ -3,73 +3,49 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 <meta charset="UTF-8" />
+<link href="/css/main.css" rel="stylesheet" type="text/css"/>
+<script src="/js/jquery-1.4.4.min.js"></script>
+<script src="/js/qikoo.js"></script>
 
-
-<script
-	src="https://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js">
-	
-</script>
+<script src="https://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
-
-
-
-$(document).ready(function(){
+$(function(){
+	$(".del").click(function(){
+		qikoo.dialog.confirm('确认删除？',function(){
+			},function(){
+		});	
+	})	
+})
+function del(){	
 	
-	$("button.del").click(function(){
-		var con=confirm("确定要删除是吗")
-		if(con==true){
-		var data = {userid:$(this).attr("id")};
-		$.ajax({
-		    cache: true,
-		    type: "post",
-		    url:"/user/delete",
-		    data:data,// 你的formid
-		    async: false,
-		    error: function(request) {
-		        alert("Connection error");
-		    },
-		    success: function(result) {
-		    		if(result=="删除成功"){location.reload();}
-		    		else{alert(result);}				
-		    }   
+	$("button").click(function(){
+		//获取点击id
+		var id = $(this).attr("id");
+		alert("当前点击id："+id);
 		});
-		 }else{}
-	});	
+	
+	var data = {userid:id};
+	$.ajax({
+	    cache: true,
+	    type: "post",
+	    url:"/user/delete",
+	    data:data,// 你的formid
+	    async: false,
+	    error: function(request) {
+	        alert("Connection error");
+	    },
+	    success: function(result) {
+	    		if(result=="删除成功"){
+	    			var tr = $(e.target);
+	    			tr.closest('tr').remove();
+	    			}
+	    		else{alert(result);}				
+		}
+	
 });
-
+	}
 </script>
 
-
-
-<style>
-.table-c table {
-	border-right: 1px solid #F00;
-	border-bottom: 1px solid #F00
-}
-
-.table-c table td {
-	border-left: 1px solid #F00;
-	border-top: 1px solid #F00;
-	width:80px;             /*单元格宽度*/
-    height:50px;             /*单元格高度*/
-    text-align:center;
-	
-}
-
-.table-c table th {
-	border-left: 2px solid #F00;
-	border-top: 2px solid #F00;
-	width:80px;             /*单元格宽度*/
-    height:60px;             /*单元格高度*/
-    text-align:center;
-}
-/* 
-css 注释： 
-只对table td设置左与上边框； 
-对table设置右与下边框； 
-为了便于截图，我们将css 注释说明换行排版 
-*/
-</style>
 
 </head>
 <body>
@@ -77,9 +53,8 @@ css 注释：
 	#if($users.size()==0)
 	<h1>没有任何数据，请检测是否有数据</h1>
 	#else
-	<div class="table-c" align="center">
-		<table width="90%" border="0" cellspacing="1" cellpadding="1">
-			<tr>
+		<table class="z_i">
+			<tr class="i0">
 				<th>UID</th>
 				<th>CREDITS</th>
 				<th>删除</th>
@@ -90,8 +65,8 @@ css 注释：
 				<td>${user.userid}</td>
 				<td>${user.credits}</td>
 				<td><button id="${user.userid}" class="del">删除</button></td>
-				<td><a href='http://yang.s1.natapp.cc/duiba/autologin2/normal?uid=${user.userid}' target="_blank">点我跳转</a></td>
-				<td><a href='http://yang.s1.natapp.cc/duiba/autologin2/test?uid=${user.userid}' target="_blank">点我跳转</a></td>
+				<td><a href='http://yang.s1.natapp.cc/duiba/dbredirect/normal?uid=${user.userid}' target="_blank">点我跳转</a></td>
+				<td><a href='http://yang.s1.natapp.cc/duiba/dbredirect/test?uid=${user.userid}' target="_blank">点我跳转</a></td>
 			</tr>
 			#end
 			<tr>
@@ -105,7 +80,6 @@ css 注释：
 				<td colspan="2" align="left"><a id="down">下一页</a></td> #end
 			</tr>
 		</table>
-	</div>
 	#end
 	
 </body>

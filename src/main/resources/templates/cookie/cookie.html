@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+  <meta charset="UTF-8"/>
+<title>cookie实现统计登录次数</title>
+
+</head>
+<body>
+
+<div align="center" style="margin:10px; ">
+	<fieldset>
+		<legend>登录信息</legend>
+		<form action="/login" method="post">
+			<table>
+				<tr>
+					<td>
+						您的帐号：<a>${username}</a>
+					</td>
+					<td>
+						
+					</td>
+				</tr>
+				<tr>
+					<td>
+						登录次数：<a>${visitTimesCookie}</a>
+					</td>
+					<td>
+						
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+					<td>
+						<input type="button" value=" 刷  新 " 
+							onclick="location='/login?ts=' + new Date().getTime(); "
+							class="button">
+					</td>
+				</tr>
+			</table>
+		</form>
+	</fieldset>
+</div>
+
+</body>
+
+</html>

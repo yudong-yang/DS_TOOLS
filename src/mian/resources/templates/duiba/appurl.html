@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>兑吧积分商城对接接口生成工具</title>
+<script src="https://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="/js/Appdemo.js"></script>
+
+<script>
+
+$(document).ready(function(){
+	$("#testJson").click(function(){
+		$.ajax({url:"/testJson",success:function(result){
+			  var person = eval('(' + result + ')'); 
+			 /* var person = result.parseJSON(); */
+			$("#div2").html(person.age);
+			$("#div1").html(person.name);
+		}});
+	});
+});
+
+</script>
+</head>
+<body>
+<!-- <button id="testJson">提交</button>
+<p>姓名：<a id="div1"></a></p>
+<p>年龄：<a id="div2"></a></p>
+
+
+<h3 id="msg"></h3> -->
+<form id="myform">
+<table>
+<tr>
+<td>应用名称：</td>
+<td>
+<input type="text" id="appname" name="appname" />
+</td>
+</tr>
+<tr>
+<td>应用标示：</td>
+<td>
+<input type="text" id="appcode" name="appcode" />
+</td>
+</tr>
+<tr>
+<td>兑吧appkey：</td>
+<td>
+<input type="text" id="appkey" name="appkey" />
+</td>
+</tr>
+<tr>
+<td>兑吧appsecret：</td>
+<td>
+<input type="text" id="appsecret" name="appsecret" />
+</td>
+</tr>
+</table>
+</form>
+<button id="geturl">提交</button>
+<br/><br/>
+扣积分请求链接： <a id="creditsurl"></a>
+<br/><br/>
+结果通知链接： <a id="notifyurl"></a>
+<br/><br/>
+虚拟商品链接： <a id="virtualurl"></a>
+<br/><br/>
+运营位置直达链接： <a id="redirecturl"></a>
+<br/><br/>
+<button id="redirect">测试跳转</button>
+</body>
+</html>

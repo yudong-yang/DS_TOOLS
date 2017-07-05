@@ -35,9 +35,9 @@ public class CreditTool {
 		if(newparams.get("timestamp")==null){
 			newparams.put("timestamp", System.currentTimeMillis()+"");
 		}
+		System.out.println("签名列表：==："+newparams);
 		String sign=SignTool.sign(newparams);
 		newparams.put("sign", sign);
-		
 		newparams.remove("appSecret");
 		
 		return AssembleTool.assembleUrl(url, newparams);

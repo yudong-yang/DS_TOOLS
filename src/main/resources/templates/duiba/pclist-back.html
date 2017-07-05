@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" /> 
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>DB</title>
+<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script>
+	 function getValue(val){
+      window.open('/duiba/autologin/normal?dbredirect='+encodeURIComponent(val)); 
+      }
+</script>
+
+<style type="text/css">
+	*{padding:0;margin:0;box-sizing:border-box;}
+	body{font-size:12px; background-color: #e5e5e5}
+	.db-TC{
+		text-align: center;
+	}
+	.db-ML{
+		margin-left: 20px;
+	}
+	.db-MT{
+		margin-top: 15px;
+	}
+	.db-body{
+		width: 652px;
+		margin: 0 auto;
+		padding: 5px;
+		background-color: #fff;
+	}
+	.db-banner{
+		width: 640px;
+		height: 300px;
+		margin: 0 auto 10px auto;
+	}
+	.db-main{
+		width: 545px;
+		padding: 15px;
+		margin: 0 auto;
+	}
+	.db-main:after{
+		content: "";
+		display: table;
+	}
+	.db-content{
+		width: 245px;
+		height: 250px;
+		padding: 10px 10px;
+		float: left;
+		
+	}
+	.db-image{
+		width: 225px;
+		height: 140px;
+	}
+	.db-info{
+		margin: 30px auto;
+		font-size: 20px;
+		color: #666;
+		font-family: 'Helvetica Neue',Helvetica,'Microsoft Yahei',Arial,sans-serif;
+	}
+	.db-more{
+		width: 100px;
+		margin: 15px auto 0 auto;
+	}
+	.db-more a{
+		color: #666;
+		font-size: 18px;
+		text-decoration: none;
+		font-family: "Times New Roman",Georgia,Serif;
+	}
+	
+	
+	.text-overflow{
+		width:200px;
+		height:100px;
+		border:1px solid red;
+		border-top:4px solid red;
+		padding:10px;
+		overflow:hidden;;/* 内容超出宽度时隐藏超出部分的内容 */
+		text-overflow:ellipsis;;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+		white-space:nowrap;/* 不换行 */
+	}
+	
+</style>
+</head>
+
+<body>
+	<div class="db-body">
+		<!-- banner -->
+		<div class="db-banner">
+			<div class="db-TC">
+			<a href="/duiba/autologin/normal">
+				<img src="http://yun.duiba.com.cn/images/201703/4vdqtovkj4.jpg" />
+				</a>
+			</div>
+		</div>
+		<!-- /banner -->
+		<!-- main -->
+		<div class="db-main">
+			<!-- content -->
+		#foreach($user in $data)
+			<div class="db-content">
+				<div class="db-image">
+					<div class="db-TC">
+						<a href="javascript:void(0);" onclick="getValue('${user.redirect}')">
+						<img src="${user.image}" />
+						</a>
+					</div>
+				</div>
+				<div class="db-info">
+					<p class="text-overflow">${user.title}</p>
+					<p style="color:#11c3bc">${user.credits}积分</p>
+				</div>
+			</div>
+			#end
+			<!-- /content -->
+		</div>
+		<!-- /main -->
+
+		<!-- mare -->
+		<div class="db-more">
+			<a href="/duiba/autologin/normal"><strong>加载更多  ...</strong></a>
+		</div>
+		<!-- /mare -->
+	</div>
+	
+</body>
+</html>

@@ -15,22 +15,16 @@ public class jsonTest {
 	public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException, NoSuchAlgorithmException {
 		 String name="./src/main/java/cn/com/duiba/test/consumer.txt";
 			String URL = buildUrl.fileread(name).toString();
+			
+			
+			
+//			String qianzhi = buildUrl.getQianzhiUrl("30");
+//			System.out.println("前置url==:"+qianzhi);
 			ConsumeJSON(URL);
 //			String url=buildUrl.getQianzhiUrl("10");
 //			String url2=buildUrl.OrderList("order", "2", "finish", "2016-12-26", "2016-12-27");
-		System.out.println(URL);
-//		System.out.println(url2);
-//		qianzhiJSON("15");
-//			String url= buildUrl.getQianzhiUrl("10");
-//			System.out.println(url);
-			
-//			System.out.println(url);
-		/*String info="17649011670074C0821|德邦物流|2254874";
-		String url= buildUrl.batchSend(info);
-		System.out.println(url);*/
-//		String orderNums="12308278416393C0821,12308267934736C0821";
-//		String url = buildUrl.batchCancel(orderNums);
-//		ConsumeJSON(URL2);
+//			System.out.println(URL);
+//			System.out.println(url2);
 		
 	}
 

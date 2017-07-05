@@ -2,10 +2,12 @@ package cn.com.duiba.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.nio.file.Paths;
 
+import org.apache.commons.io.FileUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,41 +30,30 @@ public class UploadController {
 	 * @param file
 	 * @return
 	 */
-	@RequestMapping(value="/upload",method = RequestMethod.POST)
+	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	@ResponseBody
-	public String handleFileUpload(@RequestParam("file") MultipartFile file) {
-		if (!file.isEmpty()) {
-			try {
-				/*
-				 * 这段代码执行完毕之后，图片上传到了工程的跟路径； 大家自己扩散下思维，如果我们想把图片上传到
-				 * d:/files大家是否能实现呢？ 等等;
-				 * 这里只是简单一个例子,请自行参考，融入到实际中可能需要大家自己做一些思考，比如： 1、文件路径； 2、文件名；
-				 * 3、文件格式; 4、文件大小的限制;
-				 */
-				String filePath = "./src/mian/resources/templates/";
-
-				String name = file.getOriginalFilename();
-				File uploadfile = new File(filePath + name);
-				if (uploadfile.exists()) {
-					return "文件已存在";
-				} else {
-					BufferedOutputStream out = new BufferedOutputStream(
-							new FileOutputStream(uploadfile));
-					out.write(file.getBytes());
-					out.flush();
-					out.close();
-				}
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-
-				return "上传失败," + e.getMessage();
-			} catch (IOException e) {
-				e.printStackTrace();
-				return "上传失败," + e.getMessage();
-			}
-			return "上传成功";
-		} else {
-			return "上传失败，因为文件是空的.";
-		}
-	}
+	public ResponseEntity<?> uploadFile(
+	    @RequestParam("uploadfile") MultipartFile uploadfile) {
+	  
+	  try {
+	    // Get the filename and build the local file path (be sure that the 
+	    // application have write permissions on such directory)
+	    String filename = uploadfile.getOriginalFilename();
+	    String directory = "./src/mian/resources/static/images/";
+	    String filepath = Paths.get(directory, filename).toString();
+	    
+	    // Save the file locally
+	   /* BufferedOutputStream stream =
+	        new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+	    stream.write(uploadfile.getBytes());
+	    stream.close();*/
+	    FileUtils.writeByteArrayToFile(new File(filepath), uploadfile.getBytes());
+	  }
+	  catch (Exception e) {
+	    System.out.println(e.getMessage());
+	    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	  }
+	  
+	  return new ResponseEntity<>(HttpStatus.OK);
+	} 
 }

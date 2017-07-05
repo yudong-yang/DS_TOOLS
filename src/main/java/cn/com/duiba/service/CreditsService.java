@@ -2,6 +2,11 @@ package cn.com.duiba.service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,7 +37,7 @@ public class CreditsService {
 						sql,new Object[] { credits.getUserId(),
 									credits.getCredits(),
 									credits.getOrderNum(), credits.getBizId(),
-									credits.getType(), credits.getTimestamp(),
+									credits.getType(), DateToFomat(credits.getTimestamp()),
 									credits.getDescription(),
 									credits.getFacePrice(),
 									credits.getActualPrice(), credits.getIp(),
@@ -100,4 +105,23 @@ public class CreditsService {
 		}
 	}
 
+	
+	public static String DateToFomat(String s) {
+		DateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT+08:00' yyyy", new Locale("ENGLISH", "CHINA"));
+		Date date=null;
+		try {
+			date = sdf.parse(s);
+		} catch (ParseException e) {
+			return "1970-01-01 00:00:00";
+		}
+		sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time= sdf.format(date);
+		return time;
+	}
+
+	public void createList(CreditConsumeParams params, String bizId) throws Exception {
+		Credits credit =  ParamToCredits(params,bizId);
+		insert(credit);	
+	}
+	
 }

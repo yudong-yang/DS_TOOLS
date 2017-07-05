@@ -1,0 +1,145 @@
+<html><head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+  <style type="text/css">
+    #html {
+      font-family: "Helvetica Neue",Helvetica,Hiragino Sans GB,"Microsoft Yahei",STHeiTi,Arial,sans-serif;
+    }
+
+    #body {
+      font-size: 14px;
+      line-height: 1;
+      overflow-x: hidden;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .leder {
+      width: 94.5%;
+      height: 50px;
+      margin: 3% 5.5%;
+      background-color: #e19007;
+      text-align: center;
+    }
+    
+    .leder h1{
+      color: #fff;
+      margin: 0 auto;
+      font-family: 楷体;
+      line-height: 50px;
+      vertical-align: middle;
+    }
+    .main {
+      width: 70%;
+      margin: 0 auto;
+      min-width: 1100px;
+    }
+
+    .main-content {
+      width: 60%;
+      border: 1px solid #ddd;
+      padding: 2%;
+      background-color: #fff;
+      float: right;
+      margin-left: 3%;
+    }
+
+    .aside {
+      width: 27%;
+      float: right;
+      border: 1px solid #ddd;
+    }
+
+    .hot {
+      width: 100%;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      text-align: center;
+      line-height: 50px;
+    }
+
+    .item-info{
+      float: right;
+      line-height: 90%;
+      text-align: center;
+      margin-right: 10%;
+    }
+
+    .item-info h2{
+      font-weight: 400;
+      color: #666;
+      font-size: 16px;
+      max-width: 118px;
+      overflow: hidden;
+      white-space: nowrap;
+      padding-top: 12%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 20em;
+    }
+
+    .item-info p strong {
+      font-weight: bold;
+      font-size: 17px;
+      margin: 0 auto;
+      color: #e19007;
+    }
+
+    .item-info p span {
+      color: #e19007;
+    }
+
+    #a {
+      text-decoration: none;
+    }
+
+    .section a img{
+      width: 45%;
+      padding-right: 2%
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <div class="leder">
+      <h1>积分商城</h1>
+      
+    </div>
+
+    <script>
+	function getValue(url){
+	document.getElementById("registerIF").src=url;
+	}
+    </script>
+    <div class="main-content">
+      <iframe src="/duiba/autologin/normal?dbredirect=${data[0].redirect}" id="registerIF" scrolling="no" frameborder="0" width="100%" height="100%"></iframe>
+    </div>
+    <div class="aside">
+      <div class="hot">
+        <div class="header">
+         <strong>热门兑换</strong>
+        &nbsp;&nbsp; &nbsp;<a href="#" onclick="getValue('http://trade.m.duiba.com.cn/pc/orderlist')">兑换记录</a>
+        </div>
+      </div>
+       #foreach($user in $data)
+      <div class="section" onclick="getValue('${user.redirect}')">
+        <a class="item-group" id="item-group" href="javascript:void(0);">
+          <img src="${user.image}">
+          <div class="item-info">
+            <h2 class="text-overflow">${user.title}</h2>
+            <p>
+              <strong>${user.credits}</strong>
+              <span>积分</span>
+            </p>
+          </div>
+        </a>
+      </div>
+      <hr style="border:1px dotted #ddd" />
+      #end
+      
+  </div>
+</body>

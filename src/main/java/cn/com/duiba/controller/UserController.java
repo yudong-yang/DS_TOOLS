@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import cn.com.duiba.entity.User;
 import cn.com.duiba.service.UserService;
@@ -27,12 +26,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    
+ 
+    
     @RequestMapping("/insert/{number}")
     public String IsertUser(@PathVariable("number") int number){
         logger.info("插入数据库");
         for (int i = 0; i < number; i++) {
-			
-		
         User user=new User();
         String uuid = System.currentTimeMillis()+"";
         String uid = uuid.substring(8);

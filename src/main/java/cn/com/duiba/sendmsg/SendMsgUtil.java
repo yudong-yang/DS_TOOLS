@@ -6,6 +6,7 @@
   */
 package cn.com.duiba.sendmsg;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,41 +28,49 @@ public class SendMsgUtil {
 	  * @param content
 	  * @return
 	  * @return String
+	 * @throws UnsupportedEncodingException 
 	  * @Author: feizi
 	  * @Date: 2015年4月17日 下午7:18:08
 	  * @ModifyUser：feizi
 	  * @ModifyDate: 2015年4月17日 下午7:18:08
 	 */
-	@SuppressWarnings("deprecation")
-	public static String sendMsg(String phones,String content){
+	
+	public static String sendMsg(String phones,String content) throws UnsupportedEncodingException{
 		//短信接口URL提交地址
-		String url = "短信接口URL提交地址";
+		String url = "http://service.winic.org:8009/sys_port/gateway/index.asp";//中信通短信接口地址
 		
 		Map<String, String> params = new HashMap<String, String>();
 		
-		params.put("zh", "用户账号");
-		params.put("mm", "用户密码");
-		params.put("dxlbid", "短信类别编号");
-		params.put("extno", "扩展编号");
+		params.put("id", URLEncoder.encode("YuDong-Yang","GB2312"));
+		params.put("pwd", "yang123456");
+//		params.put("to", "短信类别编号");
+//		params.put("extno", "扩展编号");
 		
 		//手机号码，多个号码使用英文逗号进行分割
-		params.put("hm", phones);
+		params.put("to", phones);
 		//将短信内容进行URLEncoder编码
-		params.put("nr", URLEncoder.encode(content));
-		
+		params.put("content", URLEncoder.encode(content,"GB2312"));
 		return HttpRequestUtil.getRequest(url, params);
 	}
+	
+	
+	
+/*	public static String sendMsg(String phones,String content) throws UnsupportedEncodingException{
+		//短信接口URL提交地址
+		String url = "http://service.winic.org:8009/sys_port/gateway/index.asp";//中信通短信接口地址
+		
+		Map<String, String> params = new HashMap<String, String>();
+		
+		    params.put("apikey", "apikey");
+		    params.put("text", content);
+		    params.put("mobile", phones);
+		params.put("content", URLEncoder.encode(content,"GB2312"));
+		return HttpRequestUtil.postRequest(url, params);
+	}*/
 	
 	/**
 	 * 随机生成6位随机验证码
 	  * 方法说明
-	  * @Discription:扩展说明
-	  * @return
-	  * @return String
-	  * @Author: feizi
-	  * @Date: 2015年4月17日 下午7:19:02
-	  * @ModifyUser：feizi
-	  * @ModifyDate: 2015年4月17日 下午7:19:02
 	 */
 	public static String createRandomVcode(){
 		//验证码
@@ -78,14 +87,13 @@ public class SendMsgUtil {
 	  * @Discription:扩展说明
 	  * @param args
 	  * @return void
-	  * @Author: feizi
-	  * @Date: 2015年4月17日 下午7:26:36
-	  * @ModifyUser：feizi
-	  * @ModifyDate: 2015年4月17日 下午7:26:36
+	 * @throws UnsupportedEncodingException 
+	  * @Author: yudong
+	  * @Date: 2017年2月24日 下午7:26:36
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnsupportedEncodingException {
 //		System.out.println(SendMsgUtil.createRandomVcode());
 //		System.out.println("&ecb=12".substring(1));
-		System.out.println(sendMsg("18258149680", "尊敬的用户，您的验证码为" + SendMsgUtil.createRandomVcode() + "，有效期为60秒，如有疑虑请详询400-069-2886（客服电话）【XXX中心】"));
+		System.out.println(sendMsg("18258149680", "尊敬的用户，您的验证码为" + SendMsgUtil.createRandomVcode() + "，有效期为60秒，如有疑虑请详询400-066-855（客服电话）【XXX中心】"));
 	}
 }

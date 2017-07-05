@@ -65,7 +65,7 @@ public class SignTool {
 		for(String s:keys){
 			string+=params.get(s);
 		}
-		System.out.println("签名前字串=="+string);
+		System.out.println("签名前字串==:"+string);
 		String sign="";
 		try {
 			sign = toHexValue(encryptMD5(string.getBytes(Charset.forName("utf-8"))));
@@ -81,6 +81,19 @@ public class SignTool {
 		md5.update(data);
 		return md5.digest();
 	}
+	
+	
+	public static  String signstring(Map<String, String> params){
+		List<String> keys=new ArrayList<String>(params.keySet());
+		Collections.sort(keys);
+		String str="";
+		for(String s:keys){
+			str+=params.get(s);
+		}
+		return str;
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		String appKey="key";

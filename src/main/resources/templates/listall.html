@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<link href="/css/main.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+	<table>
+			 <tr th:each="u:${users}">
+				<td th:text="${u.userid}">aa</td>
+				<td th:text="${u.credits}">bb</td>
+			</tr>	
+    </table>	
+</body>
+</html>

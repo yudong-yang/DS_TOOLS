@@ -21,19 +21,33 @@ public class PropertiesLoader {
 	 * Spring 提供的 PropertiesLoaderUtils 允许您直接通过基于类路径的文件地址加载属性资源 
 	 * 最大的好处就是：实时加载配置文件，修改后立即生效，不必重启 
 	 */  
-	public  void springUtil(){  
+	public static  void springUtil(){  
 	    Properties props = new Properties();   
 	        try {  
 	            props=PropertiesLoaderUtils.loadAllProperties("KeySecretMap.properties");  
 	            for(Object key:props.keySet()){  
-	                System.out.print(key+":");  
+	                System.out.print(key+":==properties==:");  
 	                System.out.println(props.get(key));  
 	            }  
 	        } catch (IOException e) {  
 	            System.out.println(e.getMessage());  
 	        }    
 	    }  
-	  
+	 
+	public static boolean getKey(String Keyset){  
+	    Properties props = new Properties();   
+	        try {  
+	            props=PropertiesLoaderUtils.loadAllProperties("KeySecretMap.properties");  
+	            for(Object key:props.keySet()){ 
+	            	if(Keyset.endsWith((String) key)){return true;} 
+	            }  
+	        } catch (IOException e) {  
+	            System.out.println(e.getMessage());  
+	            return false;
+	        }
+			return false;    
+	    } 
+	
 	
 	/** 
      * 传递键值对的Map，更新properties文件 
@@ -56,14 +70,23 @@ public class PropertiesLoader {
             filePath = URLDecoder.decode(filePath,"utf-8");      
 //            System.out.println("updateProperties propertiesPath:" + filePath);  
             props = PropertiesLoaderUtils.loadProperties(new ClassPathResource(fileName));  
-            System.out.println("updateProperties old:"+props);  
-              
-            // 写入属性文件  
             
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath,true)));  
+            for(Object key:props.keySet()){ 
+            	for(String keyset : keyValueMap.keySet()){
+            	if(keyset.endsWith((String) key)){System.out.println("存在该值=="+keyset);
+            	props.remove(props.get(key));
+            	} }
+            }  
+            
+            System.out.println("updateProperties old:"+props);  
+             
+            // 写入属性文件  
+//            String value = GetPropertiesValue(keyValueMap.get(0));
+//            System.out.println("value = :"+value);
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath)));  
               
-            props.clear();// 清空旧的文件  
-              
+//            props.clear();// 清空旧的文件  
+        
             for (String key : keyValueMap.keySet())  
                 props.setProperty(key, keyValueMap.get(key));  
               
@@ -99,13 +122,15 @@ public class PropertiesLoader {
 	    }  
 	  
  public static void main(String[] args) throws Exception {
-		
+//	System.out.println( getKey("sss"));
+	 
+//	 springUtil();
 	     Map<String, String> map = new LinkedHashMap<String, String>();  
-	        map.put("aaa","vvvv");  
-	        System.out.println(GetPropertiesValue("aaa"));
-	        if(!GetPropertiesValue("aaa").endsWith(map.get("aaa"))){
+	        map.put("aaaa","dsafdfasdfdsafdsafdsa");  
+//	        System.out.println(GetPropertiesValue("sss"));
+//	        if(!GetPropertiesValue("aaa").endsWith(map.get("aaa"))){
 		 updateProperties("KeySecretMap.properties", map);
-	        }
+//	        }
 	    }
 
 }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head lang="en">
+<meta charset="UTF-8" />
+<link href="/css/main.css" rel="stylesheet" type="text/css"/>
+<script src="/js/jquery-1.4.4.min.js"></script>
+<script src="/js/qikoo.js"></script>
+
+<script src="https://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+function del(id) { 
+	var msg = "您真的确定要删除吗？\n\n请确认！"; 
+	if (confirm(msg)==true){ 
+	    var data = {userid:id};
+		$.ajax({
+		    cache: true,
+		    type: "post",
+		    url:"/user/delete",
+		    data:data,// 你的formid
+		    async: false,
+		    error: function(request) {
+		        alert("Connection error");
+		    },
+		    success: function(result) {
+		    		if(result=="删除成功"){
+		    			var tr = document.getElementById(id);
+
+		    			tr.closest('tr').remove();
+		    			}
+		    		else{alert(result);}				
+			}
+		
+	});
+	}else{ 
+	return false; 
+	} 
+	}
+</script>
+
+
+</head>
+<body>
+	<h1 align="center">积分商城测试页面</h1>
+	#if($users.size()==0)
+	<h1>没有任何数据，请检测是否有数据</h1>
+	#else
+		<table class="z_i">
+			<tr class="i0">
+				<th>UID</th>
+				<th>CREDITS</th>
+				<th>删除</th>
+				<th>积分商城(测试1)</th>
+				<th>积分商城(测试2)</th>
+				</tr>
+			#foreach($user in $users)
+			<tr>
+				<td>${user.userid}</td>
+				<td>${user.credits}</td>
+				<td><button id="${user.userid}" onclick="javascript:return del(${user.userid});">删除</button></td>
+				<td><a href='http://yang.s1.natapp.cc/duiba/dbredirect/normal?uid=${user.userid}' target="_blank">点我跳转</a></td>
+				<td><a href='http://yang.s1.natapp.cc/duiba/dbredirect/test?uid=${user.userid}' target="_blank">点我跳转</a></td>
+			</tr>
+			#end
+			<tr>
+				#set($up = $pagenum - 1) #if($up==0)
+				<td colspan="3" align="right"><a id="up">上一页</a></td> #else
+				<td colspan="3" align="right"><a id="up"
+					href='/user/list/${up}'>上一页</a></td> #end #set($down = $pagenum + 1)
+				#if($count >= $pagenum)
+				<td colspan="2" align="left"><a id="down"
+					href='/user/list/${down}'>下一页</a></td> #else
+				<td colspan="2" align="left"><a id="down">下一页</a></td> #end
+			</tr>
+		</table>
+	#end	
+</body>
+</html>
