@@ -16,8 +16,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.com.duiba.ds.tools.sdk.AssembleTool;
 import cn.com.duiba.ds.tools.sdk.CreditConfirmParams;
 import cn.com.duiba.ds.tools.sdk.CreditTool;
+import cn.com.duiba.ds.tools.sdk.MD5;
 import cn.com.duiba.ds.tools.sdk.SignTool;
 
 public class buildUrl {

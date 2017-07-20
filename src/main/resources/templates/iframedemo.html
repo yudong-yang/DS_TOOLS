@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; margin: 0;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+     <meta name="meipian" content="iframe">
+    <title>美篇两周年 幸运大转盘</title>
+</head>
+<body style="height: 100%; margin: 0;">
+    <iframe src="" frameborder="0" width="100%" height="100%" id="iframe"></iframe>
+    
+    <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.11.1/jquery.min.js"></script>
+
+    <script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        $('#iframe').attr('src', 'http://yang.s1.natapp.cc/duiba/dbredirect/normal?uid=4444&dbredirect=https%3A%2F%2Fwww.duiba.com.cn%2Fmobile%2Fdetail%3FitemId%3D31605');
+        var title = "美篇两周年 幸运大转盘";
+        var desc = "壕礼手机任性抽";
+        var thumbimg = "https://ss2.meipian.me/711share.jpg";
+        var link = window.location.href.split("?")[0];
+        wx.config({
+            debug: false,
+            appId: '',
+            timestamp: ~~"",
+            nonceStr: '',
+            signature: '',
+            jsApiList: [
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage'
+            ]
+        });
+        wx.ready(function ()
+        {
+            wx.onMenuShareTimeline({
+                title: title,
+                link: link,
+                imgUrl: thumbimg,
+                success: function () {
+                    $.get('https://www.meipian.cn/app/stat/wechat_share.php', {'id':'azf35ml', 'from':1}, function(){});
+                }
+            });
+            wx.onMenuShareAppMessage({
+                title: title,
+                desc: desc,
+                link: link,
+                imgUrl: thumbimg,
+                success: function () {
+                    $.get('https://www.meipian.cn/app/stat/wechat_share.php', {'id':'azf35ml', 'from':1}, function(){});
+                }
+            });
+        });
+    })
+    
+    </script>
+    
+</body>
+</html>

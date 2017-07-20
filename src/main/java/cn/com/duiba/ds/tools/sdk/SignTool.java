@@ -4,7 +4,6 @@ import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,23 +92,5 @@ public class SignTool {
 		return str;
 	}
 	
-	
-	
-	public static void main(String[] args) {
-		String appKey="key";
-		String appSecret="secret";
-		
-		Map<String, String> params=new HashMap<String, String>();
-		params.put("appKey", "testappkey");
-		params.put("appSecret", "testappsecret");
-		params.put("description", "兑吧");
-		/*params.put("success", "true");
-		params.put("errorMessage", "失败的话这里会返回错误原因");
-		params.put("orderNum", "order-for-test-1465377152951");
-		params.put("bizId", "D14653773184192390");
-		params.put("paramsTest7", "7");*/
-		String sign=sign(params);
-		System.out.println(sign);
-			
-	}
+
 }

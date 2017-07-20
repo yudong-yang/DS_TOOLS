@@ -31,9 +31,9 @@ public class AppController {
 		return "cookie/login";
 	}
 	
-	@RequestMapping("/demo")
+	@RequestMapping("/iframedemo")
 	public String demo(HttpServletRequest request) {
-		return "demo";
+		return "iframedemo";
 	}
 	
 	

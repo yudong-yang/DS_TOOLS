@@ -10,7 +10,7 @@ public class AppSecrectDecode {
 		
 	
 	//需要解密的code
-	private static final String appSecretCode="2dojooMbsP2dnGg2R3CtCepqCTPu4keSPKZ3ofF";
+	private static final String appSecretCode="2diK3PFzcjtAyf3L4tsTKy5PFX24mTM9Cb7YWGd";
 	public static void main(String[] args) {
 		String appSecret=BlowfishUtils.decryptBlowfish(appSecretCode, secretKey);
 		System.out.println("appSecret: "+appSecret);
