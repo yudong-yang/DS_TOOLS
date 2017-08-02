@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.com.duiba.ds.tools.UrlUtils;
 import cn.com.duiba.ds.tools.buildUrl;
 
 import com.alibaba.fastjson.JSON;
@@ -27,8 +28,8 @@ public class qianZhiController  {
 			num="10";
 		}
 		response.addCookie(new Cookie("cook", "3333"));
-		
-		String url= buildUrl.getQianzhiUrl(num);
+		UrlUtils utils = new UrlUtils("3gyWdRiPKkaMiiH6V3RUFybsdeDZ", "4DEz67Z1VmzWVxUy5mVUnZoS2d8v");
+		String url= utils.getQianzhiUrl(num);
 //		String url= buildUrl.getPCDatalist("1","4444",num);
 		System.out.println("前置商品URL=="+url);
 		String body = buildUrl.sendGet(url);

@@ -30,13 +30,14 @@ public class jsonTest {
 
 	public static void ConsumeJSON(String url) {
 		System.out.println("发起请求时间==："+Dateformat.DateToFomat(System.currentTimeMillis()));
-		String body = buildUrl.sendGet(url);
+//		String body = buildUrl.sendGet(url);
+		String body = HttpGetDemo.doGet(url);
 		System.out.println("响应时间====:"+Dateformat.DateToFomat(System.currentTimeMillis())+"\n请求响应内容===："+body);
 		try {
 			JSONObject result = JSON.parseObject(body);
 			
 			System.out.println(result.getString("status"));
-			System.out.println(result.getString("bizId"));
+			System.out.println(result.getString("supplierBizId"));
 			System.out.println(result.getString("errorMessage"));
 			System.out.println(result.getString("credits"));
 		} catch (Exception e) {

@@ -43,6 +43,28 @@ public class CreditTool {
 		return AssembleTool.assembleUrl(url, newparams);
 	}
 	
+	public Map<String,String> buildParams(String orderNums){
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("appKey", appKey);
+		params.put("appSecret", appSecret);
+		params.put("orderNums", orderNums);
+		params.put("timestamp", System.currentTimeMillis()+"");
+		params.put("sign", SignTool.sign(params));
+		params.remove("appsecret");
+		return params;	
+	}
+	
+	public String List2String(List orderNums){
+		StringBuffer strs = new StringBuffer();
+		for (int i = 0; i < orderNums.size(); i++) {
+			strs = strs.append(orderNums.get(i)).append(",");
+		}
+		strs.deleteCharAt(strs.length()-1);
+		return strs.toString();
+	}
+
+	
+	
 	
 	
 	/**
