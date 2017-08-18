@@ -1,6 +1,9 @@
 package cn.com.duiba.test.demo;
 
+import java.nio.charset.Charset;
 import java.util.Iterator;
+
+import cn.com.duiba.ds.tools.sdk.SignTool;
 
 public class demo1 {
 	public static void main(String[] args) {
@@ -13,6 +16,10 @@ public class demo1 {
 		     tel+= array[i];
 		 }
 		 System.out.println(tel);*/	
+		
+		
+		String s = "testapp_keytestformatjsonmethodxiaodian.shop.getsessiontestsign_methodmd5timestamp1367819523v1.0test";
+	
 	}
 }
 

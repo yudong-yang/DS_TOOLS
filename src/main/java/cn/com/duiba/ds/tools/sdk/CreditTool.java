@@ -2,13 +2,10 @@ package cn.com.duiba.ds.tools.sdk;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,7 +51,7 @@ public class CreditTool {
 		return params;	
 	}
 	
-	public String List2String(List orderNums){
+	public String List2String(List<String> orderNums){
 		StringBuffer strs = new StringBuffer();
 		for (int i = 0; i < orderNums.size(); i++) {
 			strs = strs.append(orderNums.get(i)).append(",");
@@ -62,10 +59,6 @@ public class CreditTool {
 		strs.deleteCharAt(strs.length()-1);
 		return strs.toString();
 	}
-
-	
-	
-	
 	
 	/**
 	 * 通用的url生成方法

@@ -37,6 +37,7 @@ public class DuibaActivityApi {
 		{
 			CreditTool tool = new CreditTool(appKey, appSecret);
 			String uid = request.getParameter("uid");
+			String transfer = request.getParameter("transfer");
 			String dbredirect = request.getParameter("dbredirect");
 			Map<String, String> params = new HashMap<String, String>();
 			if (StringUtils.isNotBlank(uid)){
@@ -53,6 +54,10 @@ public class DuibaActivityApi {
 			if (StringUtils.isNotBlank(dbredirect)) {
 				params.put("redirect", dbredirect);
 				logger.info("用户redirect" + dbredirect);
+			}
+			if (StringUtils.isNotBlank(transfer)) {
+				params.put("transfer", transfer);
+				logger.info("transfer===" + transfer);
 			}
 			String url = tool.buildUrlWithSign(
 					"http://www.duiba.com.cn/autoLogin/autologin?", params);

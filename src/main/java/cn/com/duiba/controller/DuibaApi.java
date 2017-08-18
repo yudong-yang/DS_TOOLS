@@ -1,19 +1,17 @@
 package cn.com.duiba.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -107,8 +105,10 @@ public class DuibaApi {
 		    creditsService.createList(params,bizId);
 		    ccr.setErrorMessage(errorMessage);
 		    ccr.setBizId(bizId);
+		    System.out.println("===========进行休眠开始");
+		    Thread.sleep(20000);
+		    System.out.println("进行休眠结束===========");
 		    ccr.setCredits(userService.GetCreditsByUid(Uid));
-//		    Thread.sleep(15000);
 			return ccr.toString();
 //			 return"测试环境响应失败内容测试的";
 		} catch (Exception e) {
@@ -300,18 +300,21 @@ public class DuibaApi {
 		String appKey=GetAppkeyByid(appid);
 		String appSecret=GetSecretByid(appid);
 		CreditTool tool=new CreditTool(appKey, appSecret);
-			
+		String transfer = request.getParameter("transfer");	
 		String uid = request.getParameter("uid");
 		String dbredirect = request.getParameter("dbredirect");
-//		String dbredirect = "http://www.duiba.com.cn/mobile/detail?itemId=1888&dbnewopen";
 		Map<String, String> params=new HashMap<String, String>();
+		if (StringUtils.isNotBlank(transfer)) {
+			params.put("transfer", transfer);
+			logger.info("transfer===" + transfer);
+		}
 		if(uid!=null&&uid!=""&&uid!= "null"&&uid!="not_login"){
 			params.put("uid",uid);
 			logger.info("用户id=="+uid);
-			Long credit = userService.GetCreditsByUid(uid);
-			logger.info("用户积分"+credit);
-			if(credit!=null){
-			params.put("credits",credit.toString());
+			Long credits = userService.GetCreditsByUid(uid);
+			logger.info("用户积分"+credits);
+			if(credits!=null){
+			params.put("credits",credits.toString());
 			}else{params.put("credits","0");}
 		}else{
 			params.put("uid","not_login");
@@ -319,7 +322,6 @@ public class DuibaApi {
 			params.put("credits","0");
 		}
 	if(dbredirect!=null&&dbredirect!=""&&dbredirect != "null"){
-//		params.put("redirect","http://home.m.duiba.com.cn/#/chome/index");
 			params.put("redirect",dbredirect);
 			logger.info("用户redirect="+dbredirect);
 		}
@@ -327,65 +329,6 @@ public class DuibaApi {
 	System.out.println("免登陆地址=："+url);
 	return new RedirectView(url, true, false, true);
 	}
-	
-	
-	
-	@RequestMapping("/testlogin")
-	public String testlogin(HttpServletRequest request, Model model) throws UnsupportedEncodingException { {
-		
-		
-		CreditTool tool = new CreditTool("jlg88lyxz7siqtmr","1x0eap95f4xfi77uaptrnwh9ewzvlm"); // 115
-		Map<String, String> params = new HashMap<String, String>();
-		String uid = request.getParameter("uid");
-		String credit = request.getParameter("credits");
-		String dcustom = request.getParameter("dcustom");
-		String demo = request.getParameter("rdo1");
-		String rdo2 = request.getParameter("rdo2");
-		System.out.println("选择按钮：" + request.getParameter("rdo1")+"===="+request.getParameter("rdo2"));
-
-		String url1 = "";
-
-		if (demo.equals("test")) {
-			
-			url1 = "http://m.dui88.com/autoLogin/autologin?";
-		} else if((demo.equals("normal"))) {
-			url1 = "http://www.duiba.com.cn/autoLogin/autologin?";
-		}else if((demo.equals("pre"))) {
-			url1 = "http://pre.duiba.com.cn/autoLogin/autologin?";
-		}
-
-		if (uid != null && uid != "") {
-			
-			params.put("uid", uid);
-		} else {
-			params.put("uid", "not_login");
-		}
-
-		if (credit != null && credit != "") {
-			params.put("credits", credit);
-		} else {
-			params.put("credits", "0");
-		}
-		String redirect = "";
-		if (dcustom != null && dcustom != "") {
-			params.put("dcustom", URLEncoder.encode(dcustom,"UTF-8"));
-//			params.put("dcustom",dcustom);
-		}
-		if (redirect != null && redirect != "" && redirect != "null") {
-			params.put("redirect", redirect);
-		}
-
-		String url = tool.buildUrlWithSign(url1, params);
-		System.out.println(url);
-
-		if(rdo2.equals("1"))
-		{
-			return "redirect:"+url;
-		}else{
-			model.addAttribute("url", url);
-	         return "url";
-		}}
-}
 	
 }
 		
