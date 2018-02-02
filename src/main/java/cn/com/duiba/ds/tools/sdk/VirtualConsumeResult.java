@@ -16,7 +16,7 @@ public class VirtualConsumeResult {
 		if(status=="success"){
 			return "{'status':'success','credits':'"+credits+"','supplierBizId':'"+supplierBizId+"'}";
 		}else if(status=="process"){
-			return "{'status':'process','credits':'"+credits+"','supplierBizId':'"+supplierBizId+"'}";
+			return "{'status':'success','credits':'"+credits+"','supplierBizId':'"+supplierBizId+"'}";
 		}else 
 			return "{'status':'fail','errorMessage':'"+errorMessage+"','supplierBizId':'"+supplierBizId+"'}";
 			

@@ -64,30 +64,6 @@ public class SignTool {
 		for(String s:keys){
 			string+=params.get(s);
 		}
-	//	System.out.println("签名前字串==:"+string);
-		String sign="";
-		try {
-			sign = toHexValue(encryptMD5(string.getBytes(Charset.forName("utf-8"))));
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("md5 error");
-		}
-		return sign;
-	}
-	
-	/**
-	 * 
-	 * @param params
-	 * @return
-	 */
-	public static String sign_new(Map<String,String> params){
-		List<String> keys=new ArrayList<String>(params.keySet());
-		Collections.sort(keys);
-		String string="";
-		for(String s:keys){
-			string+=params.get(s)+"_";
-		}
-		string = string.substring(0,string.length()-1);
 		System.out.println("签名前字串==:"+string);
 		String sign="";
 		try {
@@ -98,7 +74,6 @@ public class SignTool {
 		}
 		return sign;
 	}
-	
 	
 	private static byte[] encryptMD5(byte[] data)throws Exception{
 		MessageDigest md5 = MessageDigest.getInstance("MD5");

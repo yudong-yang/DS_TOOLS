@@ -48,6 +48,7 @@ public class DuibaActivityApi {
 				params.put("uid", "not_login");
 				logger.info("用户id==" + uid);
 				params.put("credits", "0");
+
 			}
 			
 			if (StringUtils.isNotBlank(dbredirect)) {

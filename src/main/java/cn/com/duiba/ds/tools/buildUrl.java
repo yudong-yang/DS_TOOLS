@@ -14,13 +14,13 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import cn.com.duiba.ds.tools.sdk.AssembleTool;
 import cn.com.duiba.ds.tools.sdk.CreditConfirmParams;
 import cn.com.duiba.ds.tools.sdk.CreditTool;
+import cn.com.duiba.ds.tools.sdk.MD5;
 import cn.com.duiba.ds.tools.sdk.SignTool;
-import cn.com.duiba.entity.ExpressInfo;
 
 public class buildUrl {
 	
@@ -29,13 +29,10 @@ public class buildUrl {
 
 //	static final String AppSecret = "3zEURgDuJLgDnDAymW35H6M6pUiN";
 			
+			
+	static final String AppKey = "3gyWdRiPKkaMiiH6V3RUFybsdeDZ";
 
-	static final String AppKey = "21bPuGyabWsbjFAxtUBbbMqDSX1a";
-	static final String AppSecret = "34mpqvaceTjkcYewPBrBiAWC5YWv";
-	
-//	static final String AppKey = "3gyWdRiPKkaMiiH6V3RUFybsdeDZ";
-
-//  static final String AppSecret = "4DEz67Z1VmzWVxUy5mVUnZoS2d8v";
+	static final String AppSecret = "4DEz67Z1VmzWVxUy5mVUnZoS2d8v";
 
 	/**
 	 * 前置商品查询URL
@@ -165,53 +162,36 @@ public class buildUrl {
 	}
 
 	/**
-	 * 自有商品批量取消发货
-	 * @param
-	 * orderNums 最大支持100个
-	 * 方法中，对于超过100的会自动截取前100个
+	 * 批量取消发货
+	 * 
 	 * @return
 	 */
-	public  String batchCancel(List<String> orderNums) {
+	public static String batchCancel(String orderNums) {
+
 		CreditTool tool = new CreditTool(AppKey, AppSecret);
 		Map<String, String> params = new HashMap<String, String>();
-		if(orderNums.size()>100)
-		orderNums= orderNums.subList(0, 100);
-		
-		StringBuffer orders = new StringBuffer();
-		
-		for (String orderNum:orderNums) 
-			orders.append(orderNum).append(",");
-		
-		params.put("orderNums", orders.deleteCharAt(orders.length()-1).toString());
+		params.put("orderNums", orderNums);
 		String url = tool.buildUrlWithSign(
 				"http://www.duiba.com.cn/sendObject/batchCancel?", params);
+		System.out.println("batchCancel==" + url);
 		return url;
 	}
 
 	/**
-	 * 自有商品批量发货
-	 * @params info 格式如下
-	 * 发货的数量，每次请求不超过100个
-	 * 方法中，对于超过100的会自动截取前100个
+	 * 批量发货
+	 * 
 	 * @return
 	 */
-	public static  String batchSend(List<ExpressInfo> infos) {
+	public static String batchSend(String info) {
 		CreditTool tool = new CreditTool(AppKey, AppSecret);
 		Map<String, String> params = new HashMap<String, String>();
-		StringBuffer expressInfo = new StringBuffer();
-		if(infos.size()>100){
-			infos = infos.subList(0, 100);
-		}
-		for (ExpressInfo info:infos) {
-			expressInfo.append(info);
-		}
-		expressInfo.deleteCharAt(expressInfo.length()-1);
-		params.put("expressInfo", expressInfo.toString());
+		// String info="2016090614090878900564458C0283|申通快递|2254874";
+		params.put("expressInfo", info);
 		String url = tool.buildUrlWithSign(
 				"http://www.duiba.com.cn/sendObject/batchSend?", params);
+		System.out.println("batchSend==" + url);
 		return url;
-	}			
-	
+	}
 
 	/**
 	 * 审核订单URL
@@ -287,8 +267,10 @@ public class buildUrl {
 	 * @throws IOException
 	 */
 
-	public static String fileread(String filename) throws FileNotFoundException, IOException {
+	public static String fileread(String filename)
+			throws FileNotFoundException, IOException {
 		File file = new File(filename);
+		@SuppressWarnings("resource")
 		FileReader reader = new FileReader(file);
 		int fileLen = (int) file.length();
 		char[] chars = new char[fileLen];
@@ -409,21 +391,17 @@ public class buildUrl {
 		return param;
 	}
 
-	public static String getActivityTimes(String uid, String validType, 
-			String activityId, String times, String bizId) {
-		CreditTool tool=new CreditTool("21bPuGyabWsbjFAxtUBbbMqDSX1a", "34mpqvaceTjkcYewPBrBiAWC5YWv");
-//		CreditTool tool=new CreditTool("3pNyWfK2N3hF5n68Qawg2hLcvVok", "57np8h4aCgs8LfzhyzpiX7nu2MU");//酷我-测试
-//		CreditTool tool=new CreditTool("25XR6mnrgS2TXL2tJLdN4ehDD4kr", "23weKskVSuA6x2k1g5PjeK9zMwGm");//360 os
+	public static String getActivityTimes(String uid, String json ,String activityId, String times, String bizId) {
+		CreditTool tool=new CreditTool("jlg88lyxz7siqtmr", "1x0eap95f4xfi77uaptrnwh9ewzvlm");
 		//		CreditTool tool = new CreditTool(AppKey, AppSecret);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("uid", uid);
 		params.put("bizId", bizId);
 		params.put("activityId", activityId);
 		params.put("times", times+"");
-//		params.put("timestamp", "");
 //		params.put("json", json);
 		String url = tool.buildUrlWithSign(
-				"http://activity.m.duiba.com.cn/activityVist/addTimes?", params);
+				"https://activity.m.duiba.com.cn/activityVist/addTimes?", params);
 		return url;
 		
 	}   

@@ -3,16 +3,16 @@ buildscript {
         mavenCentral()
         maven{ url 'http://nexus.dui88.com/nexus/content/groups/public/'}   //兑吧线上maven仓库
     }
-    dependencies { classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.5.RELEASE") }
+    dependencies { classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.2.RELEASE") }
 }
 
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'eclipse'
-apply plugin: 'maven'
+
 jar {
     baseName = 'DS_TOOLS'
-    version = ''
+    version = '0.1.0'
     manifest { attributes 'Main-Class': 'cn.com.duiba.ds.Application' }
 }
 
@@ -35,7 +35,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-velocity")	//velocity 模板引擎
 	compile("org.springframework.boot:spring-boot-starter-test")
-	compile("com.alibaba:fastjson:1.1.32")
+	compile("com.alibaba:fastjson:1.1.15")
 	compile("org.apache.httpcomponents:httpclient:4.3.3")
 	
 	compile("org.apache.httpcomponents:httpmime:4.4.1")

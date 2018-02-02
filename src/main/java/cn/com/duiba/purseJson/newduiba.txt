@@ -1,5 +1,0 @@
-[
-{"appId":"100","appKey":"dsfasdfasdfds","appName":"xiaoming","appSecret":"alskjdflsjadlkfj"},
-{"appId":"101","appKey":"dsfasdfasdfds","appName":"xiaoming","appSecret":"alskjdflsjadlkfj"},
-{"appId":"102","appKey":"dsfasdfasdfds","appName":"xiaoming","appSecret":"alskjdflsjadlkfj"}
-]

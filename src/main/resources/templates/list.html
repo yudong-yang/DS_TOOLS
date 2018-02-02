@@ -5,9 +5,7 @@
 <script src="/js/jquery-1.4.4.min.js"></script>
 <script src="/js/qikoo.js"></script>
 
-<script src="/bootstrap/js/jquery-1.9.1.js" type="text/javascript"></script> 
-	<script src="/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-<link href="/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"></link>
+<script src="https://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 function del(id) { 
 	var msg = "您真的确定要删除吗？\n\n请确认！"; 
@@ -46,20 +44,18 @@ function del(id) {
 	<h1>没有任何数据，请检测是否有数据</h1>
 	#else
 		<table class="z_i">
-		<thead>
-			<tr class="i0" align="center">
+			<tr class="i0">
 				<th>UID</th>
 				<th>CREDITS</th>
 				<th>删除</th>
 				<th>积分商城(测试1)</th>
 				<th>积分商城(测试2)</th>
 				</tr>
-		</thead>
 			#foreach($user in $users)
 			<tr>
 				<td>${user.userid}</td>
 				<td>${user.credits}</td>
-				<td><button id="${user.userid}" class="btn btn-default" onclick="javascript:return del(${user.userid});">删除</button></td>
+				<td><button id="${user.userid}" onclick="javascript:return del(${user.userid});">删除</button></td>
 				<td><a href='http://yang.s1.natapp.cc/duiba/dbredirect/normal?uid=${user.userid}' target="_blank">点我跳转</a></td>
 				<td><a href='http://yang.s1.natapp.cc/duiba/dbredirect/test?uid=${user.userid}' target="_blank">点我跳转</a></td>
 			</tr>

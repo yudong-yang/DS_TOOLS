@@ -10,43 +10,39 @@
 
 <div align="center" style="margin:10px; ">
 	<fieldset>
-		<legend>登录</legend>
-		<form action="/cookie" method="post">
+		<legend>登录信息</legend>
+		<form action="/login" method="post">
 			<table>
 				<tr>
 					<td>
+						您的帐号：<a>${username}</a>
 					</td>
 					<td>
-						<span style="color:red; "></span>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						帐号：
-					</td>
-					<td>
-						<input type="text" name="username" style="width:200px;"/>
+						
 					</td>
 				</tr>
 				<tr>
 					<td>
-						密码：
+						登录次数：<a>${visitTimesCookie}</a>
 					</td>
 					<td>
-						<input type="password" name="password" style="width:200px; "/>
+						
 					</td>
 				</tr>
 				<tr>
 					<td>
 					</td>
 					<td>
-						<input type="submit" value=" 登  录 " class="button" />
+						<input type="button" value=" 刷  新 " 
+							onclick="location='/login?ts=' + new Date().getTime(); "
+							class="button">
 					</td>
 				</tr>
 			</table>
 		</form>
 	</fieldset>
 </div>
+
 </body>
 
 </html>

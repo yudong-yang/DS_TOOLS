@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 
 import cn.com.duiba.Utils.GetAppkey;
 
-@SuppressWarnings("deprecation")
 @Configuration
 @SpringBootApplication
 @EnableConfigurationProperties(GetAppkey.class)

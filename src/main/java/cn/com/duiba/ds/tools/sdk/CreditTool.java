@@ -32,37 +32,13 @@ public class CreditTool {
 		if(newparams.get("timestamp")==null){
 			newparams.put("timestamp", System.currentTimeMillis()+"");
 		}
-		 System.out.println("签名列表：==："+newparams);
+		System.out.println("签名列表：==："+newparams);
 		String sign=SignTool.sign(newparams);
 		newparams.put("sign", sign);
 		newparams.remove("appSecret");
 		
 		return AssembleTool.assembleUrl(url, newparams);
 	}
-	
-	
-	/**
-	 * 通用的url生成方法
-	 * 如果下面的方法不能满足，可以使用此方法进行生成
-	 * @param url
-	 * @param params
-	 * @return
-	 */
-	public String buildUrlWithSign_new(String url,Map<String, String> params){
-		Map<String, String> newparams=new HashMap<String, String>(params);
-		newparams.put("appKey", appKey);
-		newparams.put("appSecret", appSecret);
-		if(newparams.get("timestamp")==null){
-			newparams.put("timestamp", System.currentTimeMillis()+"");
-		}
-		System.out.println("签名列表：==："+newparams);
-		String sign=SignTool.sign_new(newparams);
-		newparams.put("sign", sign);
-		newparams.remove("appSecret");
-		
-		return AssembleTool.assembleUrl(url, newparams);
-	}
-	
 	
 	public Map<String,String> buildParams(String orderNums){
 		Map<String, String> params = new HashMap<String, String>();
@@ -337,7 +313,7 @@ public class CreditTool {
 		VirtualConsumeParams params=new VirtualConsumeParams();
 		params.setAppKey(appKey);
 		params.setUid(request.getParameter("uid"));
-		params.setDevelopBizId(request.getParameter("developBizId"));
+		params.setSupplierBizId(request.getParameter("supplierBizId"));
 		params.setTimestamp(new Date(Long.valueOf(request.getParameter("timestamp"))));
 		params.setDescription(request.getParameter("description"));
 		params.setOrderNum(request.getParameter("orderNum"));
@@ -364,29 +340,6 @@ public AddCreditsParams parseaddCredits(HttpServletRequest request) throws Excep
 	params.setDescription(request.getParameter("description"));
 	params.setOrderNum(request.getParameter("orderNum"));
 	params.setType(request.getParameter("type"));
-	return params;
-}
-
-public RecordParams RecordParams(HttpServletRequest request) throws Exception {
-	if(!appKey.equals(request.getParameter("appKey"))){
-		throw new Exception("appKey不匹配");
-	}
-	if(request.getParameter("timestamp")==null){
-		throw new Exception("请求中没有带时间戳");
-	}
-	boolean verify=SignTool.signVerify(appSecret, request);
-	if(!verify){
-		throw new Exception("签名验证失败");
-	}
-	RecordParams params=new RecordParams();
-	params.setAppKey(appKey);
-	params.setUid(request.getParameter("uid"));
-	params.setCredits(Long.valueOf(request.getParameter("credits")));
-	params.setTimestamp(new Date(Long.valueOf(request.getParameter("timestamp"))));
-	params.setRecordDetailUrl(request.getParameter("recordDetailUrl"));
-	params.setLogoUrl(request.getParameter("logoUrl"));
-	params.setTitle(request.getParameter("title"));
-	params.setRecordId(request.getParameter("recordId"));
 	return params;
 }
 		

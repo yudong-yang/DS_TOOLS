@@ -25,7 +25,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-        
+
+    
+ 
     
     @RequestMapping("/insert/{number}")
     public String IsertUser(@PathVariable("number") int number){

@@ -13,7 +13,7 @@ public class VirtualConsumeParams {
 	private String appKey;
 	private Date timestamp;
 	private Long credits;
-	private String developBizId="";
+	private String supplierBizId="";
 	private String uid="";
 	private String description="";
 	private String orderNum="";
@@ -56,7 +56,7 @@ public class VirtualConsumeParams {
 		map.put("description", description);
 		map.put("uid", uid);
 		map.put("appKey", appKey);
-		map.put("developBizId", developBizId);
+		map.put("supplierBizId", supplierBizId);
 		map.put("appSecret", appSecret);
 		map.put("timestamp", timestamp.getTime()+"");
 		map.put("orderNum", orderNum);
@@ -83,11 +83,11 @@ public class VirtualConsumeParams {
 	public void setOrderNum(String orderNum) {
 		this.orderNum = orderNum;
 	}
-	public String getDevelopBizId() {
-		return developBizId;
+	public String getSupplierBizId() {
+		return supplierBizId;
 	}
-	public void setDevelopBizId(String developBizId) {
-		this.developBizId = developBizId;
+	public void setSupplierBizId(String supplierBizId) {
+		this.supplierBizId = supplierBizId;
 	}
 	public String getParams() {
 		return params;
