@@ -47,8 +47,10 @@ public class IndexController {
 	
 	
 	@RequestMapping("/test")
-	public String fpTest() {
-		return "fp_middle/fptest";
+	public String fpTest(Model model) {
+		String url = "https://activity.m.duiba.com.cn/question/index?id=2426416&appKey=44uJNrtUxdPdWcxDy53rsB4sGbKV&openBs=openbs";
+		model.addAttribute("redirect", url);
+		return "fp_middle/middlepage";
 	}
 
 	@RequestMapping("/index")

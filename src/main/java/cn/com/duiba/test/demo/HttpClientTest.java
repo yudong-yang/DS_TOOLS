@@ -38,8 +38,9 @@ import org.junit.Test;
 public class HttpClientTest {
 
 	@Test
-	public void jUnitTest() {
-		get();
+	public void main() {
+		String url = "http://activity.m.duiba.com.cn/activityVist/addTimes?uid=HMX_0&activityId=2629701&times=1&bizId=1514345674821&sign=bf3d9d37227ab5043d1caa5708b82857&appKey=21bPuGyabWsbjFAxtUBbbMqDSX1a&timestamp=1514344674821&";
+		get(url);
 	}
 
 	/**
@@ -194,11 +195,11 @@ public class HttpClientTest {
 	/**
 	 * 发送 get请求
 	 */
-	public void get() {
+	public void get(String url) {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		try {
 			// 创建httpget.  
-			HttpGet httpget = new HttpGet("http://www.baidu.com/");
+			HttpGet httpget = new HttpGet(url);
 			System.out.println("executing request " + httpget.getURI());
 			// 执行get请求.  
 			CloseableHttpResponse response = httpclient.execute(httpget);

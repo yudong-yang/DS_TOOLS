@@ -10,23 +10,25 @@ public class Autologin {
 	
 	public static void main(String[] args) throws UnsupportedEncodingException {
 
-		CreditTool tool=new CreditTool("3pNyWfK2N3hF5n68Qawg2hLcvVok", "57np8h4aCgs8LfzhyzpiX7nu2MU"); //酷我测试环境~   ~酷我-测试	18806/34337
-//		CreditTool tool=new CreditTool("3gyWdRiPKkaMiiH6V3RUFybsdeDZ", "4DEz67Z1VmzWVxUy5mVUnZoS2d8v"); 
-//		CreditTool tool=new CreditTool("3gyWdRiPKkaMiiH6V3RUFybsdeDZ", "4DEz67Z1VmzWVxUy5mVUnZoS2d8v"); 
+		//CreditTool tool=new CreditTool("T8Zi4hotfreHvNWxTWGPnxp19tu", "3ND1C4xa25ofttLZBMjdsHGpV4V6"); 
+		CreditTool tool=new CreditTool("jlg88lyxz7siqtmr", "1x0eap95f4xfi77uaptrnwh9ewzvlm");
 		Map<String, String> params=new HashMap<String, String>();
-		params.put("uid","200306800");
+		params.put("uid","test");
 		params.put("credits","0");
-//		params.put("bizId","act-"+System.currentTimeMillis());
-//		params.put("times","1");
-//		params.put("actid","2392806");
-//		params.put("vip","0");
-		String redirect = "http://trade.m.duiba.com.cn/Crecord/recordNotifyRedirect?id=2795319412";
+		params.put("dcustom","avatar=http://yun.duiba.com.cn/duibaManagerWeb/7fen28siy4.png&nickname=xiaoming");
+		
+	String redirect="";
+	
+   // redirect = "http://activity.m.duiba.com.cn/newtools/index?id=2675067";
 	if(redirect!=null&&redirect!=""&&redirect != "null")
 			params.put("redirect",redirect); 
 		
-	String url=tool.buildUrlWithSign("https://www.duiba.com.cn/autoLogin/autologin?",params);
+	String url=tool.buildUrlWithSign("https://home.m.duiba.com.cn/autoLogin/autologin?",params);
      System.out.println(url);
-	
 	}
-
 }
+
+
+
+
+

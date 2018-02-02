@@ -35,12 +35,7 @@ public class HttpGetDemo {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		String name="./src/main/java/cn/com/duiba/test/consumer.txt";
 		String URL = buildUrl.fileread(name).toString();
-		
-		String url="http://127.0.0.1:8080/testPost";
-		Map<String, String> params = new HashMap<String , String>();
-		params.put("name", "xiaomingsdfsd");
-		params.put("sex", "1");
-		String response = buildUrl.sendPost(url, params);
+		String response=doGet(URL);
 		
 		System.out.println(response);
 		

@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+  	 <meta content="text/html;charset=UTF-8" />
+  	 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+     <meta name="viewport" content="width=device-width, initial-scale=1" />
+	 <title>测试页面</title>  
+	<script src="https://static9.pplive.cn/oth/2012/10/jssdk/v_20150408155209/jsbridge.js"></script>
+	<script src="https://yun.duiba.com.cn/h5/lib/md5.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.4.1.min.js"></script>
+  </head>
+  <body>
+  
+<button id='test1' name='btn1' onclick='requirelogin()'>登录</button>
+
+<script>
+(function() {
+	window.ppsdk.config({
+		debug: false
+	});
+	var redirectUrl=encodeURIComponent(window.location.href);
+	ppsdk.ready(function() {
+		window.requirelogin = function() {
+			ppsdk.getUserInfo({
+				success: function(res) {
+					alert(res.userName)
+					var sign = md5(res.userName +'&0&99bdc3a2972142708eef47ebff2fc65e')
+					$.ajax({							
+						url: 'https://api.passport.pptv.com/autoLoginDuiba?token='+res.token,
+						dataType: "jsonp",
+						jsonpCallback: 'duibalogin',
+						data:{
+							username:res.userName,
+							activityVip:'0',
+							format:'jsonp',
+							cb:'duibalogin',
+							sign:sign
+						},
+						success: function(res) {
+							if (res.errorCode == 0) {
+								//res.autoLoginUrl 兑吧免登录链接
+							var Url = decodeURIComponent(res.autoLoginUrl)
+							window.location.replace(Url);
+							}else{
+								alert(res.message)
+							}
+						}
+					});
+					
+				},
+				error: function(errCode, msg) {
+					alert(errCode+'=='+msg)
+				}
+			});
+		};
+		
+
+	
+	});
+})();
+</script>
+  
+
+  
+  
+  </body>
+ </html>

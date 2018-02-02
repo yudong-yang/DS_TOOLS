@@ -10,7 +10,7 @@ public class Dateformat {
 
 public static void main(String[] args) throws ParseException {
 	long s1 = System.currentTimeMillis();
-	long t2=1494247765878L;
+	long t2=1509446741193L;
 	System.out.println("当前时间毫秒值"+s1);
 	
 	String s2=DateToFomat(t2);
