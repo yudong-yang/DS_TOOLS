@@ -1,25 +1,21 @@
 package cn.com.duiba.test.demo;
 
-import java.nio.charset.Charset;
-import java.util.Iterator;
-
-import cn.com.duiba.ds.tools.sdk.SignTool;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 public class demo1 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
-	/*	int [] array = new int[]{5,2,1,9,7};
-		 int [] index = new int []{2,4,4,3,2,0,3,2,3,3,1};
-		 String tel = "";
-		 
-		 for (int i:index) {
-		     tel+= array[i];
-		 }
-		 System.out.println(tel);*/	
-		
-		
-		String s = "testapp_keytestformatjsonmethodxiaodian.shop.getsessiontestsign_methodmd5timestamp1367819523v1.0test";
-	
+		 URL url = new URL("https://yun.duiba.com.cn/upload/3300gr31l4.json");  
+	        InputStream ism=url.openStream();  
+	        byte[] bytes=new byte[1024];  
+	        ism.read(bytes);  
+	        String str=new String(bytes,"utf-8");  
+	        System.err.println(str);  
+	        while(ism.read(bytes)>-1){  
+	            System.out.println(str);  
+	        }  
 	}
 }
 

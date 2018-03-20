@@ -35,7 +35,7 @@ public class UserController {
         for (int i = 0; i < number; i++) {
         User user=new User();
         String uuid = System.currentTimeMillis()+"";
-        String uid = uuid.substring(8);
+        String uid = "uid"+uuid.substring(4);
         user.setUserid(uid);
         user.setUsername("xiaowang");
         user.setCredits(12547L);

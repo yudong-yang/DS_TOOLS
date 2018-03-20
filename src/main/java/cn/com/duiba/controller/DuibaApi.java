@@ -50,18 +50,11 @@ public class DuibaApi {
 	@Autowired
     private AppDemoService appDemoService;
     
-/*	@Value("${duiba.appKey}")
-	private String appKey;
-	@Value("${duiba.appSecret}")
-	private String appSecret;
-	*/
-	
+
 	public String GetAppkeyByid(String appcode){
-//		return PropertiesLoader.GetPropertiesValue(appid+".appKey");
 		return appDemoService.findByAppCode(appcode).get(0).getAppkey();
 	}
 	public String GetSecretByid(String appcode){
-//		return PropertiesLoader.GetPropertiesValue(appid+".appSecret");	
 		return appDemoService.findByAppCode(appcode).get(0).getAppsectet();
 	}
 	
@@ -74,11 +67,9 @@ public class DuibaApi {
 		CreditTool tool=new CreditTool(appKey, appSecret);
 		try {
 			CreditConsumeParams params= tool.parseCreditConsume(request);
-			System.out.println(params.getParams()+"==="+params.getDescription());
 			String paramsAppKey = request.getParameter("appKey"); //获取code
 			String orderNum = request.getParameter("orderNum"); //获取兑吧订单号
 			String bizId = "dbmarket-" + orderNum;
-//			String bizId = orderNum;
 			Long credits =params.getCredits();
 			String Uid =request.getParameter("uid");
 			String errorMessage = "";
@@ -99,18 +90,13 @@ public class DuibaApi {
 		    }
 		   
 		    CreditConsumeResult ccr = new CreditConsumeResult(success);
-//		    Credits credit=creditsService.ParamToCredits(params,bizId);
-//		    System.out.println("时间==="+credit.getTimestamp());
 		    userService.cutCredit(Uid, credits);
 		    creditsService.createList(params,bizId);
 		    ccr.setErrorMessage(errorMessage);
 		    ccr.setBizId(bizId);
-		    System.out.println("===========进行休眠开始");
-		    Thread.sleep(20000);
-		    System.out.println("进行休眠结束===========");
 		    ccr.setCredits(userService.GetCreditsByUid(Uid));
 			return ccr.toString();
-//			 return"测试环境响应失败内容测试的";
+
 		} catch (Exception e) {
 			  CreditConsumeResult ccr = new CreditConsumeResult(false);
 			  ccr.setErrorMessage("扣积分异常:"+e.getMessage());
@@ -118,7 +104,6 @@ public class DuibaApi {
 			  ccr.setBizId("bizid=123345323423");
 			  System.out.println("响应内容==："+ccr.toString());
 				return ccr.toString();
-//			  return"测试环境响应失败内容测试的"+e;
 			 
 		}
 	}
@@ -136,7 +121,6 @@ public class DuibaApi {
 			String paramsAppKey = request.getParameter("appKey"); //获取code
 			String orderNum = request.getParameter("orderNum"); //获取兑吧订单号
 			String bizId = "dbmarket:" + orderNum;
-//			String bizId = orderNum;
 			Long credits =params.getCredits();
 			String Uid =request.getParameter("uid");
 			String errorMessage = ""; 
@@ -155,15 +139,12 @@ public class DuibaApi {
 		    ccr.setErrorMessage(errorMessage);
 		    ccr.setBizId(bizId);
 		    ccr.setCredits(userService.GetCreditsByUid(Uid));
-		    System.out.println("加积分响应内容==："+ccr.toString());
 			return ccr.toString();
 		} catch (Exception e) {
 			AddCreditResult ccr = new AddCreditResult(false);
 			  ccr.setErrorMessage("加积分异常"+e.getMessage());
 			  ccr.setCredits(-1L);
-			  ccr.setBizId("bizid=123345323423");
-			  System.out.println("加积分响应内容==："+ccr.toString());
-				return ccr.toString();
+			return ccr.toString();
 
 			 
 		}
@@ -325,6 +306,7 @@ public class DuibaApi {
 			params.put("redirect",dbredirect);
 			logger.info("用户redirect="+dbredirect);
 		}
+	params.put("signKeys", "uid|credits|redirect");
 	String url=tool.buildUrlWithSign("http://www.duiba.com.cn/autoLogin/autologin?",params);
 	System.out.println("免登陆地址=："+url);
 	return new RedirectView(url, true, false, true);

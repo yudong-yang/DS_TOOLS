@@ -26,17 +26,17 @@ public class Autologin {
 		CreditTool tool=new CreditTool("3gyWdRiPKkaMiiH6V3RUFybsdeDZ", "4DEz67Z1VmzWVxUy5mVUnZoS2d8v"); 
 //		CreditTool tool=new CreditTool("E1kBGx6bfYj1HtX9e8MPKfkEqsY", "3zEURgDuJLgDnDAymW35H6M6pUiN");	
 		Map<String, String> params=new HashMap<String, String>();
-		params.put("uid","4444");
-		params.put("credits","72");
-//		params.put("dcustom","status=0&btnText=签到");
-		params.put("bizid","act-"+System.currentTimeMillis());
-		params.put("times","2");
-		params.put("actid","2221001");
+		params.put("uid","not_login");
+		params.put("credits","0");
+		params.put("transfer","weixin");
+//		params.put("bizid","act-"+System.currentTimeMillis());
+//		params.put("times","2");
+//		params.put("actid","2221001");
 //		params.put("alipay","&panzhiyong900＠163.com");
 //		params.put("realname","阿斯顿潘志勇");
-//		params.put("qq","823458789");
+		params.put("timestamp", System.currentTimeMillis()+"00");
 //		params.put("phone","182****9680");
-		String redirect = "https://activity.m.duiba.com.cn/newtools/index?id=2221001";
+		String redirect = "";
 	if(redirect!=null&&redirect!=""&&redirect != "null")
 			params.put("redirect",redirect); 
 		
